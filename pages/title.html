@@ -1,0 +1,135 @@
+<div class="page" id="title">
+    <h1>風呂無し、<br />屋根無し、<br />地蔵付き。</h1>
+
+    <div id="title-buttons">
+        <button data-link="#stage-select">始める</button>
+        <button data-link="#how-to-play">遊び方</button>
+        <button data-link="#credit">クレヂット</button>
+    </div>
+</div>
+
+<div class="page" id="how-to-play">
+    <button data-back="1" class="back">戻る</button>
+    <div id="explanation">いくつかのセルをクリックして見本と同じにしよう。</div>
+</div>
+
+<div class="page" id="credit">
+    <button data-back="1" class="back">戻る</button>
+
+    <div>
+        SE: 効果音ラボ <br />
+        <br />
+        企画: いぽた <br />
+        制作: MCR <br />
+        <a href="https://x.com/ocu_mcr" target="_blank">https://x.com/ocu_mcr</a>
+    </div>
+</div>
+
+<div class="page" id="stage-select">
+    <button data-back="1" class="back">戻る</button>
+
+    <div id="chapters">
+        <button data-link="#chapter0" class="chapter-button">Chapter0</button>
+        <button data-link="#chapter1" class="chapter-button">Chapter1</button>
+    </div>
+</div>
+
+<div class="page" id="chapter0">
+    <button data-back="1" class="back">戻る</button>
+
+    <div class="stages">
+        <button class="stage-button">Stage0</button>
+        <button class="stage-button">Stage1</button>
+        <button class="stage-button">Stage2</button>
+        <button class="stage-button">Stage3</button>
+        <button class="stage-button">Stage4</button>
+    </div>
+</div>
+
+<div class="page" id="chapter1">
+    <button data-back="1" class="back">戻る</button>
+
+    <div class="stages">
+        <button class="stage-button">Stage0</button>
+        <button class="stage-button">Stage1</button>
+        <button class="stage-button">Stage2</button>
+        <button class="stage-button">Stage3</button>
+        <button class="stage-button">Stage4</button>
+    </div>
+</div>
+
+<style>
+    h1 {
+        position: absolute;
+        left: 0;
+        top: 8vh;
+        font-size: 27vh;
+
+        line-height: 1.05;
+
+        white-space: nowrap;
+    }
+
+    #title-buttons {
+        position: absolute;
+        top: 8vh;
+        right: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 1vh;
+
+        background-color: #ffffff80;
+
+        & button {
+            font-size: 8vh;
+        }
+    }
+
+    .back {
+        position: absolute;
+        left: 4vh;
+        top: 4vh;
+        width: fit-content;
+        font-size: 6vh;
+    }
+
+    #chapters {
+        width: 100vw;
+        height: 100%;
+
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 4vh;
+
+        display: flex;
+
+        overflow-x: scroll;
+    }
+
+    .stages {
+        display: flex;
+        flex-direction: row;
+        gap: 6vh;
+    }
+
+    .stage-button {
+        aspect-ratio: 1;
+
+        padding: 2vh 4vh;
+
+        border: 0.2vh var(--black) solid;
+
+        font-size: 4vh;
+    }
+
+    .chapter-button {
+        height: 48vh;
+        aspect-ratio: 1;
+
+        border: 0.2vh var(--black) solid;
+
+        font-size: 8vh;
+    }
+</style>

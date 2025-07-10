@@ -1,0 +1,111 @@
+@font-face {
+    font-family: dot;
+    src: url(/assets/KH-Dot-Hibiya-32.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    width: fit-content;
+    line-height: 1em;
+
+    user-select: none;
+
+    font-size: 6vh;
+    font-family: dot, sans-serif;
+
+    touch-action: manipulation;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --black: #111;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+#container {
+    height: 100%;
+    aspect-ratio: 16/9;
+    max-width: 100%;
+
+    /* border: 1px var(--black) solid; */
+}
+
+#texture {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.1;
+    /* mix-blend-mode: overlay; */
+}
+
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 4vh;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+button {
+    padding: 1vh;
+    font-size: 4vh;
+
+    cursor: pointer;
+
+    max-width: 100%;
+
+    background: none;
+    border: none;
+
+    &:hover {
+        scale: 1.05;
+        text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4);
+        animation: shake 0.6s infinite linear;
+    }
+}
+
+#error {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (orientation: portrait) {
+    #container {
+        display: none;
+    }
+
+    #error {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,170 @@
+<div class="page" id="game">
+    <button class="back">ホームへ</button>
+    <button class="reset">リセット</button>
+    <button class="next blink">次へ</button>
+
+    <div id="count"></div>
+</div>
+
+<style>
+    .back {
+        position: absolute;
+        left: 4vh;
+        top: 4vh;
+        width: fit-content;
+        font-size: 6vh;
+    }
+
+    .reset {
+        position: absolute;
+        right: 4vh;
+        top: 4vh;
+        width: fit-content;
+        font-size: 6vh;
+    }
+
+    .next {
+        display: none;
+
+        position: absolute;
+        right: 4vh;
+        bottom: 4vh;
+        font-size: 6vh;
+
+        &.visible {
+            display: flex;
+        }
+    }
+
+    #count {
+        position: absolute;
+        bottom: 8vh;
+    }
+
+    #game {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .cells {
+        position: relative;
+        display: grid;
+
+        width: 35%;
+        border: 0.1vh var(--black) solid;
+    }
+
+    .cell {
+        width: 100%;
+
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        aspect-ratio: 1;
+        border: 0.1vh var(--black) solid;
+
+        cursor: pointer;
+
+        &:hover {
+            scale: 0.95;
+        }
+
+        &.hover {
+            background-color: #ffff0010;
+
+            &::after {
+                right: 0;
+                position: absolute;
+                content: "+1";
+                color: green;
+                font-size: 3.5vh;
+            }
+        }
+    }
+
+    input {
+        &[value="0"] {
+            color: lightgray;
+        }
+
+        &[value="1"] {
+            color: black;
+        }
+
+        &[value="2"] {
+            color: hsl(0, 100%, 40%);
+        }
+
+        &[value="3"] {
+            color: hsl(45, 100%, 40%);
+        }
+
+        &[value="4"] {
+            color: hsl(90, 100%, 40%);
+        }
+
+        &[value="5"] {
+            color: hsl(135, 100%, 40%);
+        }
+
+        &[value="6"] {
+            color: hsl(180, 100%, 40%);
+        }
+
+        &[value="6"] {
+            color: hsl(225, 100%, 40%);
+        }
+
+        &[value="7"] {
+            color: hsl(270, 100%, 40%);
+        }
+
+        &[value="8"] {
+            color: hsl(315, 100%, 40%);
+        }
+    }
+
+    [name="period"] {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        width: 4vh;
+
+        font-size: 4vh;
+
+        background: none;
+        border: none;
+    }
+
+    [name="value"] {
+        text-align: center;
+
+        font-size: 6vh;
+        pointer-events: none;
+        width: 8vh;
+
+        background: none;
+        border: none;
+    }
+
+    .fade-in {
+        animation: fade-in 0.1s;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(2vh);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
