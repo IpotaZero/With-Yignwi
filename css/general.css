@@ -3,6 +3,11 @@
     src: url(/assets/KH-Dot-Hibiya-32.ttf);
 }
 
+@font-face {
+    font-family: mincho;
+    src: url(/assets/NewTegomin-Regular.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -23,7 +28,7 @@
 }
 
 :root {
-    --black: #111;
+    --black: #112;
 }
 
 html,
@@ -42,9 +47,11 @@ body {
 }
 
 #container {
+    display: flex;
     height: 100%;
-    aspect-ratio: 16/9;
-    max-width: 100%;
+    width: 100%;
+
+    justify-content: center;
 
     /* border: 1px var(--black) solid; */
 }
@@ -57,6 +64,7 @@ body {
     z-index: 1000;
     opacity: 0.1;
     /* mix-blend-mode: overlay; */
+    filter: sepia(100%);
 }
 
 .page {
@@ -98,6 +106,7 @@ button {
     position: absolute;
     opacity: 0;
     pointer-events: none;
+    font-size: 4vh;
 }
 
 @media (orientation: portrait) {

@@ -2,13 +2,35 @@ import { Z } from "./Zn.js" // Adjust the path as needed
 
 type Zn<N extends number> = InstanceType<ReturnType<typeof Z<N>>>
 
+export function solve<N extends number>(A: Zn<N>[][], b: Zn<N>[]) {
+    const { L, U, P } = LU(A)
+
+    const invL = inv(L)
+
+    const y = mul(
+        invL,
+        P.map((i) => b[i]),
+    )
+
+    const x = solveUx(U, y)
+
+    const H = getKernel(U)
+
+    return {
+        x,
+        H,
+    }
+}
+
 export function LU<N extends number>(A: Zn<N>[][]) {
+    const period = A[0][0].period
+
     /**行数 */
     const m = A.length
     /**列数 */
     const n = A[0].length
     /**単位下三角 */
-    const L = createZeroMatrix(m, m, A[0][0].period)
+    const L = createZeroMatrix(m, m).map((row) => row.map((n) => new (Z(period))(n)))
     /**上三角 */
     const U = A.map((row) => row.slice())
     /**pivot */
@@ -96,26 +118,26 @@ export function LU<N extends number>(A: Zn<N>[][]) {
     return { L, U, P }
 }
 
-export function solverUx<N extends number>(U: Zn<N>[][], y: Zn<N>[]) {
+export function solveUx<N extends number>(U: Zn<N>[][], y: Zn<N>[]) {
     const period = U[0][0].period
+    const Zn = Z(period)
 
     const n = y.length
-    const x: Zn<N>[] = Array(n).fill(new (Z(period))(0))
+    const x: Zn<N>[] = Array(n).fill(new Zn(0))
 
-    // console.log("U:\n" + u.map((row) => row.join("\t")).join("\n"))
-    // console.log("次元:", l)
+    const rows = [...Array(n).keys()].toReversed()
 
-    for (let i = 0; i < n; i++) {
-        const m = n - i - 1
-
+    // 下から見ていく
+    for (const m of rows) {
         // console.log(`${m}行目開始`)
 
-        const allZero = U[m].every((n) => n.value === 0)
+        const allZero = U[m].every((n) => !n.inv())
 
         if (allZero) {
             // console.log(`全て0なのでスキップ`)
 
-            if (y[m].value !== 0) {
+            if (y[m].inv()) {
+                // 解けない
                 return null
             }
 
@@ -124,13 +146,13 @@ export function solverUx<N extends number>(U: Zn<N>[][], y: Zn<N>[]) {
 
         let g = 0
 
-        while (m + g < U[m].length && !U[m][m + g].inv()) {
+        while (!U[m][m + g].inv()) {
             g++
         }
 
         // console.log(`${m + g}列目にpivot発見`)
 
-        const d = dot(U[m].slice(m + g + 1), x.slice(m + g + 1))
+        const d = dot(U[m].slice(m + g), x.slice(m + g))
 
         x[m + g] = y[m].sub(d).mul(U[m][m + g].inv()!)
         // console.log(`x[${m + g}]=${x[m + g]}`)
@@ -143,13 +165,13 @@ export function mul<N extends number>(A: Zn<N>[][], x: Zn<N>[]) {
     return A.map((row) => dot(row, x))
 }
 
-function invL<N extends number>(L: Zn<N>[][]) {
+export function inv<N extends number>(L: Zn<N>[][]) {
     const n = L.length
 
     const period = L[0][0].period
 
     // 単位行列
-    const invL = createUnitMatrix(n, n, period)
+    const invL = createUnitMatrix(n, n).map((row) => row.map((n) => new (Z(period))(n)))
 
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < i; j++) {
@@ -240,12 +262,10 @@ export function getKernel<N extends number>(U: Zn<N>[][]): Zn<N>[][] {
     return basis
 }
 
-function createUnitMatrix<N extends number>(rows: number, cols: number, n: N): Zn<N>[][] {
-    return Array.from({ length: rows }, (_, i) =>
-        Array.from({ length: cols }, (_, j) => (i === j ? new (Z(n))(1) : new (Z(n))(0))),
-    )
+function createUnitMatrix(rows: number, cols: number): number[][] {
+    return Array.from({ length: rows }, (_, i) => Array.from({ length: cols }, (_, j) => (i === j ? 1 : 0)))
 }
 
-function createZeroMatrix<N extends number>(rows: number, cols: number, n: N): Zn<N>[][] {
-    return Array.from({ length: rows }, () => Array(cols).fill(new (Z(n))(0)))
+export function createZeroMatrix(rows: number, cols: number): number[][] {
+    return Array.from({ length: rows }, () => Array(cols).fill(0))
 }

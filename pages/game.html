@@ -1,58 +1,116 @@
 <div class="page" id="game">
-    <button class="back">ホームへ</button>
-    <button class="reset">リセット</button>
-    <button class="next blink">次へ</button>
+    <div id="top">
+        <button class="back">戻る</button>
+        <button class="reset">再挑戦</button>
+    </div>
 
-    <div id="count"></div>
+    <div id="middle"></div>
+
+    <div id="bottom">
+        <div id="stage-id"></div>
+        <div id="count"></div>
+        <div id="next">
+            <button class="blink">次へ</button>
+        </div>
+    </div>
 </div>
 
 <style>
-    .back {
-        position: absolute;
-        left: 4vh;
-        top: 4vh;
-        width: fit-content;
-        font-size: 6vh;
+    #game {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        width: 100%;
+
+        padding: 6vh;
     }
 
-    .reset {
-        position: absolute;
-        right: 4vh;
-        top: 4vh;
-        width: fit-content;
-        font-size: 6vh;
-    }
+    #top {
+        display: flex;
+        width: 100%;
 
-    .next {
-        display: none;
+        & .back {
+            margin-right: auto;
 
-        position: absolute;
-        right: 4vh;
-        bottom: 4vh;
-        font-size: 6vh;
+            text-align: left;
+            font-size: 6vh;
+        }
 
-        &.visible {
-            display: flex;
+        & .reset {
+            margin-left: auto;
+
+            text-align: right;
+            font-size: 6vh;
         }
     }
 
-    #count {
-        position: absolute;
-        bottom: 8vh;
+    #middle {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+
+        flex-shrink: 0;
     }
 
-    #game {
+    #bottom {
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+        width: 100%;
+        height: 1em;
+
+        & #stage-id {
+            flex: 1;
+            text-align: left;
+            line-height: 1;
+        }
+
+        & #count {
+            flex: 1;
+            text-align: center;
+            line-height: 1;
+        }
+
+        & #next {
+            flex: 1;
+
+            margin: 0 auto;
+            text-align: right;
+
+            opacity: 0;
+            pointer-events: none;
+
+            font-size: 6vh;
+
+            &.visible {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            & button {
+                font-size: 6vh;
+            }
+        }
     }
 
     .cells {
         position: relative;
         display: grid;
 
-        width: 35%;
+        width: 60vh;
         border: 0.1vh var(--black) solid;
+    }
+
+    :root {
+        --zero: lightgray;
+        --one: black;
+        --two: hsl(0, 100%, 40%);
+        --three: hsl(45, 100%, 40%);
+        --four: hsl(90, 100%, 40%);
+        --five: hsl(135, 100%, 40%);
+        --six: hsl(180, 100%, 40%);
+        --seven: hsl(225, 100%, 40%);
+        --eight: hsl(270, 100%, 40%);
+        --nine: hsl(315, 100%, 40%);
     }
 
     .cell {
@@ -72,58 +130,51 @@
             scale: 0.95;
         }
 
-        &.hover {
+        &[data-hover] {
             background-color: #ffff0010;
+        }
 
-            &::after {
-                right: 0;
-                position: absolute;
-                content: "+1";
-                color: green;
-                font-size: 3.5vh;
-            }
+        &[data-hover]::after {
+            right: 0;
+            opacity: 0.7;
+            position: absolute;
+            font-size: 3.5vh;
+        }
+
+        &[data-hover="1"]::after {
+            content: "+1";
+            color: var(--one);
+        }
+
+        &[data-hover="2"]::after {
+            content: "+2";
+            color: var(--two);
         }
     }
 
     input {
         &[value="0"] {
-            color: lightgray;
+            color: var(--zero);
         }
 
         &[value="1"] {
-            color: black;
+            color: var(--one);
         }
 
         &[value="2"] {
-            color: hsl(0, 100%, 40%);
+            color: var(--two);
         }
 
         &[value="3"] {
-            color: hsl(45, 100%, 40%);
+            color: var(--three);
         }
 
         &[value="4"] {
-            color: hsl(90, 100%, 40%);
+            color: var(--four);
         }
 
         &[value="5"] {
-            color: hsl(135, 100%, 40%);
-        }
-
-        &[value="6"] {
-            color: hsl(180, 100%, 40%);
-        }
-
-        &[value="6"] {
-            color: hsl(225, 100%, 40%);
-        }
-
-        &[value="7"] {
-            color: hsl(270, 100%, 40%);
-        }
-
-        &[value="8"] {
-            color: hsl(315, 100%, 40%);
+            color: var(--five);
         }
     }
 
@@ -150,21 +201,5 @@
 
         background: none;
         border: none;
-    }
-
-    .fade-in {
-        animation: fade-in 0.1s;
-    }
-
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-            transform: translateY(2vh);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
 </style>

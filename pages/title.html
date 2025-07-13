@@ -1,5 +1,9 @@
+<div class="page" id="pretitle">
+    <button data-link="#title">Presented by MCR</button>
+</div>
+
 <div class="page" id="title">
-    <h1>風呂無し、<br />屋根無し、<br />地蔵付き。</h1>
+    <h1>風呂無し、<br />屋根無し、<br />地獄行き。</h1>
 
     <div id="title-buttons">
         <button data-link="#stage-select">始める</button>
@@ -10,7 +14,10 @@
 
 <div class="page" id="how-to-play">
     <button data-back="1" class="back">戻る</button>
-    <div id="explanation">いくつかのセルをクリックして見本と同じにしよう。</div>
+    <div id="explanation">
+        <p>いくつかのマスをクリックして見本と同じにしよう。</p>
+        <p>自力で解くのが難しい場合は連立方程式を建てよう。</p>
+    </div>
 </div>
 
 <div class="page" id="credit">
@@ -29,36 +36,67 @@
     <button data-back="1" class="back">戻る</button>
 
     <div id="chapters">
-        <button data-link="#chapter0" class="chapter-button">Chapter0</button>
-        <button data-link="#chapter1" class="chapter-button">Chapter1</button>
+        <button data-link="#chapter0" class="chapter-button">第零章</button>
+        <button data-link="#chapter1" class="chapter-button">第一章</button>
     </div>
 </div>
 
 <div class="page" id="chapter0">
-    <button data-back="1" class="back">戻る</button>
-
     <div class="stages">
-        <button class="stage-button">Stage0</button>
-        <button class="stage-button">Stage1</button>
-        <button class="stage-button">Stage2</button>
-        <button class="stage-button">Stage3</button>
-        <button class="stage-button">Stage4</button>
+        <button class="story-button">物語</button>
+        <button class="stage-button">第零幕</button>
+        <button class="stage-button">第一幕</button>
+        <button class="stage-button">第二幕</button>
+        <button class="stage-button">第三幕</button>
+        <button class="stage-button">第四幕</button>
     </div>
+
+    <button data-back="1" class="back">戻る</button>
 </div>
 
 <div class="page" id="chapter1">
-    <button data-back="1" class="back">戻る</button>
-
     <div class="stages">
-        <button class="stage-button">Stage0</button>
-        <button class="stage-button">Stage1</button>
-        <button class="stage-button">Stage2</button>
-        <button class="stage-button">Stage3</button>
-        <button class="stage-button">Stage4</button>
+        <button class="story-button">物語</button>
+        <button class="stage-button">第零幕</button>
+        <button class="stage-button">第一幕</button>
+        <button class="stage-button">第二幕</button>
+        <button class="stage-button">第三幕</button>
+        <button class="stage-button">第四幕</button>
     </div>
+
+    <button data-back="1" class="back">戻る</button>
 </div>
 
 <style>
+    .back {
+        position: absolute;
+        left: 8vh;
+        top: 6vh;
+        width: fit-content;
+        font-size: 6vh;
+    }
+
+    p {
+        margin: 1.2em 0;
+        line-height: 1.2;
+    }
+</style>
+
+<style>
+    #pretitle button {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<style>
+    #title {
+        max-height: 100%;
+        max-width: 100%;
+        aspect-ratio: 16/9;
+        width: auto;
+    }
+
     h1 {
         position: absolute;
         left: 0;
@@ -86,18 +124,12 @@
             font-size: 8vh;
         }
     }
+</style>
 
-    .back {
-        position: absolute;
-        left: 4vh;
-        top: 4vh;
-        width: fit-content;
-        font-size: 6vh;
-    }
-
+<style>
     #chapters {
         width: 100vw;
-        height: 100%;
+        height: 100vh;
 
         align-items: center;
         justify-content: space-around;
@@ -109,12 +141,25 @@
     }
 
     .stages {
+        position: absolute;
         display: flex;
         flex-direction: row;
+
+        align-items: center;
+        justify-content: space-evenly;
         gap: 6vh;
+
+        height: 100vh;
+        width: 100vw;
+
+        padding: 0 8vh;
+
+        overflow-x: auto;
     }
 
-    .stage-button {
+    .stage-button,
+    .story-button {
+        height: 32vh;
         aspect-ratio: 1;
 
         padding: 2vh 4vh;

@@ -40,12 +40,13 @@ export class Cells {
 
             cell.onclick = () => this.#onClickCell(index, stage.rows, stage.cols)
             cell.onmouseover = () => this.#onMouseOver(index, stage.rows, stage.cols)
+            cell.ontouchstart = () => this.#onMouseOver(index, stage.rows, stage.cols)
 
             this.cells.appendChild(cell)
         })
 
         this.cells.onmouseout = () => {
-            ;[...this.cells.children].forEach((cell) => cell.classList.remove("hover"))
+            ;[...this.cells.children].forEach((cell) => cell.removeAttribute("data-hover"))
         }
     }
 
@@ -88,8 +89,8 @@ export class Cells {
         const deltas = this.#createDeltas()
 
         // まず全てのcellから "hover" クラスを外す
-        Array.from(this.cells.children).forEach((cell) => {
-            cell.classList.remove("hover")
+        ;(Array.from(this.cells.children) as HTMLElement[]).forEach((cell) => {
+            cell.removeAttribute("data-hover")
         })
 
         // 周囲三マスだけ "hover" クラスを付与
@@ -99,7 +100,7 @@ export class Cells {
             if (r >= 0 && r < rows && c >= 0 && c < cols) {
                 const idx = r * cols + c
                 const cellElem = this.cells.children[idx] as HTMLElement
-                cellElem.classList.add("hover")
+                cellElem.dataset["hover"] = "1"
             }
         })
     }

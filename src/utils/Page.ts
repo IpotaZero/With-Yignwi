@@ -1,5 +1,9 @@
 export function page(container: HTMLElement, currentPageSelector: string, html: string) {
-    let history = [currentPageSelector]
+    const currentPageSegments = currentPageSelector.split(" ")
+
+    let history: string[] = []
+    history.push(...currentPageSegments.slice(0, -1))
+    history.push(currentPageSegments.at(-1)!)
 
     container.style.opacity = "0"
     container.innerHTML = html
@@ -31,7 +35,7 @@ export function page(container: HTMLElement, currentPageSelector: string, html: 
         container.style.pointerEvents = ""
     }
 
-    changePage(currentPageSelector, true)
+    changePage(currentPageSegments.at(-1)!, true)
 
     const linkButtons = container.querySelectorAll("[data-link]")
 

@@ -3,17 +3,27 @@ import { SE } from "../SE.js"
 import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
 import { SceneGame } from "./SceneGame.js"
+import { SceneNovel } from "./SceneNovel.js"
 
 export class SceneTitle {
-    constructor(firstPage: string) {
-        this.#loadPage(firstPage)
+    constructor(pageHistory: string) {
+        this.#loadPage(pageHistory)
     }
 
-    async #loadPage(firstPage: string) {
+    async #loadPage(pageHistory: string) {
         const container = document.getElementById("container")!
 
         const html = await fetch("pages/title.html").then((response) => response.text())
-        page(container, firstPage, html)
+
+        page(container, pageHistory, html)
+
+        this.#setupButtons()
+    }
+
+    #setupButtons() {
+        const container = document.getElementById("container")!
+
+        const chapterButtons = container.querySelectorAll<HTMLButtonElement>(".chapter-button")
 
         const stageButtons = container.querySelectorAll<HTMLButtonElement>(".stage-button")
 
@@ -21,6 +31,15 @@ export class SceneTitle {
             button.onclick = async () => {
                 await Awaits.fade(container)
                 new SceneGame(index)
+            }
+        })
+
+        const novelButtons = container.querySelectorAll<HTMLButtonElement>(".story-button")
+
+        novelButtons.forEach((button, index) => {
+            button.onclick = async () => {
+                await Awaits.fade(container)
+                new SceneNovel(index)
             }
         })
 
@@ -33,11 +52,21 @@ export class SceneTitle {
             }
         })
 
-        LocalStorage.getData().forEach((data, i) => {
+        const stageResults = LocalStorage.getData()
+
+        stageResults.forEach((data, i) => {
             data.cleared && (stageButtons[i].innerHTML += `☆`)
             data.leastCleared && (stageButtons[i].innerHTML += `☆`)
         })
 
-        LocalStorage.setData(0, { cleared: true, leastCleared: true })
+        for (const i of Array(2).keys()) {
+            if (stageResults.slice(i * 5, i * 5 + 5).every((stage) => stage.cleared)) {
+                chapterButtons[i].innerHTML += `☆`
+            }
+
+            if (stageResults.slice(i * 5, i * 5 + 5).every((stage) => stage.leastCleared)) {
+                chapterButtons[i].innerHTML += `☆`
+            }
+        }
     }
 }
