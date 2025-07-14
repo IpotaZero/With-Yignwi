@@ -1,6 +1,11 @@
 <div class="page" id="game">
     <div id="top">
-        <button class="back">戻る</button>
+        <button class="back">戻る　</button>
+        <div id="paints">
+            <button id="paint">🖌</button>
+            <button id="click" class="hidden">い</button>
+            <button id="erase">あ</button>
+        </div>
         <button class="reset">再挑戦</button>
     </div>
 
@@ -30,11 +35,24 @@
         display: flex;
         width: 100%;
 
+        z-index: 10;
+
         & .back {
             margin-right: auto;
 
             text-align: left;
             font-size: 6vh;
+        }
+
+        & #paints {
+            text-align: center;
+
+            & button {
+                font-size: 6vh;
+                border: var(--black) 0.1vh solid;
+
+                animation: fade-in 0.1s;
+            }
         }
 
         & .reset {
@@ -57,6 +75,8 @@
         display: flex;
         width: 100%;
         height: 1em;
+
+        z-index: 10;
 
         & #stage-id {
             flex: 1;
@@ -201,5 +221,18 @@
 
         background: none;
         border: none;
+    }
+
+    canvas {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+
+        image-rendering: pixelated;
+
+        &.touchable {
+            pointer-events: all;
+        }
     }
 </style>

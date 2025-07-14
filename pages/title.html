@@ -1,7 +1,3 @@
-<div class="page" id="pretitle">
-    <button data-link="#title">Presented by MCR</button>
-</div>
-
 <div class="page" id="title">
     <h1>風呂無し、<br />屋根無し、<br />地獄行き。</h1>
 
@@ -52,6 +48,7 @@
     </div>
 
     <button data-back="1" class="back">戻る</button>
+    <h2 class="chapter-label">第零章</h2>
 </div>
 
 <div class="page" id="chapter1">
@@ -65,6 +62,7 @@
     </div>
 
     <button data-back="1" class="back">戻る</button>
+    <h2 class="chapter-label">第一章</h2>
 </div>
 
 <style>
@@ -79,13 +77,6 @@
     p {
         margin: 1.2em 0;
         line-height: 1.2;
-    }
-</style>
-
-<style>
-    #pretitle button {
-        width: 100%;
-        height: 100%;
     }
 </style>
 
@@ -138,6 +129,13 @@
         display: flex;
 
         overflow-x: scroll;
+    }
+
+    .chapter-label {
+        position: absolute;
+        top: 6vh;
+        width: fit-content;
+        font-size: 6vh;
     }
 
     .stages {

@@ -78,10 +78,10 @@ body {
     height: 100%;
 
     font-size: 4vh;
+}
 
-    &.hidden {
-        display: none;
-    }
+.hidden {
+    display: none;
 }
 
 button {

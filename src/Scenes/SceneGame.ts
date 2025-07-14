@@ -14,6 +14,8 @@ export class SceneGame {
     #container: HTMLElement
     #countDiv!: HTMLElement
     #answer!: string
+    #cvs = document.createElement("canvas")
+    #ctx = this.#cvs.getContext("2d")!
 
     constructor(stageId: number) {
         this.#stageId = stageId
@@ -35,6 +37,8 @@ export class SceneGame {
         await this.#loadPage()
         this.#cacheElements()
         this.#initUI()
+        this.#setupCanvas()
+        this.#setupPaintButtons()
         this.#setupEventHandlers()
     }
 
@@ -62,6 +66,116 @@ export class SceneGame {
         this.#container.querySelector("#stage-id")!.textContent = `第${c[Math.floor(this.#stageId / 5)]}章 ${
             c[this.#stageId % 5]
         }幕`
+    }
+
+    #setupCanvas() {
+        this.#container.appendChild(this.#cvs)
+
+        let drawing = false
+        let lastX = 0
+        let lastY = 0
+
+        const resizeCanvas = () => {
+            this.#cvs.width = this.#container.clientWidth
+            this.#cvs.height = this.#container.clientHeight
+        }
+
+        resizeCanvas()
+        window.addEventListener("resize", resizeCanvas)
+
+        const getPos = (e: MouseEvent | TouchEvent) => {
+            const rect = this.#cvs.getBoundingClientRect()
+            if (e instanceof TouchEvent) {
+                const touch = e.touches[0] || e.changedTouches[0]
+                return {
+                    x: touch.clientX - rect.left,
+                    y: touch.clientY - rect.top,
+                }
+            } else {
+                return {
+                    x: (e as MouseEvent).clientX - rect.left,
+                    y: (e as MouseEvent).clientY - rect.top,
+                }
+            }
+        }
+
+        const startDrawing = (x: number, y: number) => {
+            drawing = true
+            lastX = x
+            lastY = y
+        }
+
+        const drawLine = (x: number, y: number, lineWidth: number) => {
+            if (!drawing) return
+            this.#ctx.beginPath()
+            this.#ctx.imageSmoothingEnabled = false
+            this.#ctx.lineWidth = lineWidth
+            this.#ctx.strokeStyle = "#111"
+            this.#ctx.moveTo(lastX, lastY)
+            this.#ctx.lineTo(x, y)
+            this.#ctx.stroke()
+            lastX = x
+            lastY = y
+        }
+
+        const stopDrawing = () => {
+            drawing = false
+        }
+
+        // Mouse events
+        this.#cvs.addEventListener("mousedown", (e) => {
+            const pos = getPos(e)
+            startDrawing(pos.x, pos.y)
+        })
+
+        this.#cvs.addEventListener("mousemove", (e) => {
+            const pos = getPos(e)
+            drawLine(pos.x, pos.y, 4)
+        })
+
+        this.#cvs.addEventListener("mouseup", stopDrawing)
+        this.#cvs.addEventListener("mouseleave", stopDrawing)
+
+        // Touch events
+        this.#cvs.addEventListener(
+            "touchstart",
+            (e) => {
+                const pos = getPos(e)
+                startDrawing(pos.x, pos.y)
+            },
+            { passive: false },
+        )
+
+        this.#cvs.addEventListener(
+            "touchmove",
+            (e) => {
+                if (!drawing) return
+                e.preventDefault()
+                const pos = getPos(e)
+                drawLine(pos.x, pos.y, 3)
+            },
+            { passive: false },
+        )
+
+        this.#cvs.addEventListener("touchend", stopDrawing)
+        this.#cvs.addEventListener("touchcancel", stopDrawing)
+    }
+
+    #setupPaintButtons() {
+        const paint = this.#container.querySelector<HTMLElement>("#paint")!
+        const click = this.#container.querySelector<HTMLElement>("#click")!
+        const erase = this.#container.querySelector<HTMLElement>("#erase")!
+
+        const toggle = () => {
+            this.#cvs.classList.toggle("touchable")
+            paint.classList.toggle("hidden")
+            click.classList.toggle("hidden")
+        }
+
+        paint.onclick = toggle
+        click.onclick = toggle
+
+        erase.onclick = () => this.#ctx.clearRect(0, 0, this.#cvs.width, this.#cvs.height)
     }
 
     #setupEventHandlers() {

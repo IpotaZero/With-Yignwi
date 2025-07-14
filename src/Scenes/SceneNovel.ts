@@ -1,3 +1,4 @@
+import { setupParticle } from "../run"
 import { Awaits } from "../utils/Awaits"
 import { page } from "../utils/Page"
 import { SceneTitle } from "./SceneTitle"
@@ -12,6 +13,8 @@ export class SceneNovel {
 
         const html = await fetch("pages/novel.html").then((res) => res.text())
         page(container, "#chapter" + index, html)
+
+        container.querySelectorAll<HTMLElement>(".page").forEach(setupParticle)
 
         container.querySelectorAll<HTMLElement>(".back").forEach((button) => {
             button.onclick = async () => {
