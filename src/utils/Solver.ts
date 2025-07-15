@@ -1,3 +1,4 @@
+import { createZeroMatrix, createUnitMatrix } from "../game/Weight.js"
 import { Z } from "./Zn.js" // Adjust the path as needed
 
 type Zn<N extends number> = InstanceType<ReturnType<typeof Z<N>>>
@@ -260,12 +261,4 @@ export function getKernel<N extends number>(U: Zn<N>[][]): Zn<N>[][] {
     console.assert(n - basis.length === rank, "次元定理に矛盾するにゃ！")
 
     return basis
-}
-
-function createUnitMatrix(rows: number, cols: number): number[][] {
-    return Array.from({ length: rows }, (_, i) => Array.from({ length: cols }, (_, j) => (i === j ? 1 : 0)))
-}
-
-export function createZeroMatrix(rows: number, cols: number): number[][] {
-    return Array.from({ length: rows }, () => Array(cols).fill(0))
 }

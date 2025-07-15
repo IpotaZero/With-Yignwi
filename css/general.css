@@ -20,6 +20,7 @@
 
     font-size: 6vh;
     font-family: dot, sans-serif;
+    color: #111;
 
     touch-action: manipulation;
     -webkit-user-drag: none;

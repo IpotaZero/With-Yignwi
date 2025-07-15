@@ -2,9 +2,14 @@
     <div id="top">
         <button class="back">戻る　</button>
         <div id="paints">
-            <button id="paint">🖌</button>
-            <button id="click" class="hidden">い</button>
-            <button id="erase">あ</button>
+            <button id="click" class="on">い</button>
+            <button id="paint">
+                <img src="../assets/images/pen.png" />
+            </button>
+            <button id="erase">
+                <img src="../assets/images/eraser.png" />
+            </button>
+            <button id="erase-all">消</button>
         </div>
         <button class="reset">再挑戦</button>
     </div>
@@ -45,13 +50,33 @@
         }
 
         & #paints {
-            text-align: center;
-
+            display: flex;
+            flex-direction: row;
+            gap: 4vh;
             & button {
-                font-size: 6vh;
-                border: var(--black) 0.1vh solid;
+                height: 100%;
+                aspect-ratio: 1;
+
+                border: var(--black) 0.2vh solid;
 
                 animation: fade-in 0.1s;
+
+                &.on {
+                    border: var(--black) 0.2vh dashed;
+                    cursor: auto;
+
+                    opacity: 0.5;
+
+                    &:hover {
+                        scale: 1;
+                        text-shadow: none;
+                    }
+                }
+
+                & img {
+                    height: 100%;
+                    image-rendering: pixelated;
+                }
             }
         }
 
@@ -93,21 +118,22 @@
         & #next {
             flex: 1;
 
-            margin: 0 auto;
-            text-align: right;
+            display: flex;
+            justify-content: flex-end;
 
-            opacity: 0;
-            pointer-events: none;
+            margin: 0 auto;
 
             font-size: 6vh;
 
-            &.visible {
-                opacity: 1;
-                pointer-events: all;
-            }
-
             & button {
                 font-size: 6vh;
+                display: none;
+                padding: 0;
+            }
+
+            &.visible button {
+                display: block;
+                animation: fade-in 0.1s;
             }
         }
     }
@@ -118,6 +144,10 @@
 
         width: 60vh;
         border: 0.1vh var(--black) solid;
+
+        &.proof {
+            pointer-events: none;
+        }
     }
 
     :root {
@@ -234,5 +264,15 @@
         &.touchable {
             pointer-events: all;
         }
+    }
+
+    .eraser {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+
+        pointer-events: none;
+
+        border: var(--black) 0.2vh solid;
     }
 </style>

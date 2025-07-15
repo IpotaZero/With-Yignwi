@@ -25,8 +25,7 @@ export class ScenePretitle {
         )
 
         container.querySelector("button")!.onclick = async () => {
-            await Awaits.fade(container)
-            new SceneTitle("#title")
+            await Awaits.fade(container, () => new SceneTitle("#title").ready)
         }
     }
 }

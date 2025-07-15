@@ -1,4 +1,5 @@
 import { ScenePretitle } from "./Scenes/ScenePretitle.js"
+import { H, x } from "./test.js"
 
 document.addEventListener("DOMContentLoaded", () => {
     new ScenePretitle()
@@ -7,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("contextmenu", (e) => {
     e.preventDefault()
 })
+
+console.log({ x, H })
 
 const img = document.createElement("img")
 img.src = "assets/images/maple.png"
@@ -25,6 +28,7 @@ export function setupParticle(page: HTMLElement) {
             particle.style.top = `calc(${rect.top + y}px - 4vh)`
             particle.style.width = "8vh"
             particle.style.height = "8vh"
+            particle.style.scale = "" + (Math.random() / 2 + 0.8)
             particle.style.opacity = "" + Math.random() * 0.5
             particle.style.transition = "transform 1s ease-out, opacity 1s ease-out"
             particle.style.zIndex = "1000"

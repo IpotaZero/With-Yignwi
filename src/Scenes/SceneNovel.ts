@@ -4,8 +4,10 @@ import { page } from "../utils/Page"
 import { SceneTitle } from "./SceneTitle"
 
 export class SceneNovel {
+    ready: Promise<void>
+
     constructor(index: number) {
-        this.#loadPage(index)
+        this.ready = this.#loadPage(index)
     }
 
     async #loadPage(index: number) {
@@ -18,7 +20,7 @@ export class SceneNovel {
 
         container.querySelectorAll<HTMLElement>(".back").forEach((button) => {
             button.onclick = async () => {
-                await Awaits.fade(container)
+                await Awaits.fadeOut(container)
                 new SceneTitle("#title #stage-select #chapter" + index)
             }
         })
