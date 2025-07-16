@@ -6,7 +6,7 @@
             <button id="paint">
                 <img src="../assets/images/pen.png" />
             </button>
-            <button id="erase">
+            <button id="eraser">
                 <img src="../assets/images/eraser.png" />
             </button>
             <button id="erase-all">消</button>
@@ -129,11 +129,11 @@
                 font-size: 6vh;
                 display: none;
                 padding: 0;
-            }
 
-            &.visible button {
-                display: block;
-                animation: fade-in 0.1s;
+                &.visible {
+                    display: block;
+                    animation: fade-in 0.1s;
+                }
             }
         }
     }
@@ -257,12 +257,12 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        pointer-events: none;
+        pointer-events: all;
 
         image-rendering: pixelated;
 
-        &.touchable {
-            pointer-events: all;
+        &.untouchable {
+            pointer-events: none;
         }
     }
 

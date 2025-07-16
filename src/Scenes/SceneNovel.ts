@@ -39,4 +39,3 @@ export class SceneNovel {
 // 主人公はそれを解いて次の日Yignwiにさりげなく渡した
 // Yignwiはそれを見て主人公に微笑んだ
 // Yignwiが笑うのを見たのは初めてだった
-const stories = [``]
