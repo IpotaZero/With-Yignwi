@@ -92,7 +92,7 @@ export class SceneTitle {
             if (document.fullscreenElement) {
                 document.exitFullscreen()
             } else {
-                container.requestFullscreen()
+                document.body.requestFullscreen()
             }
         }
     }

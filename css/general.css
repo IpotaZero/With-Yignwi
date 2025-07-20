@@ -20,7 +20,6 @@
 
     font-size: 6vh;
     font-family: dot, sans-serif;
-    color: #111;
 
     touch-action: manipulation;
     -webkit-user-drag: none;
@@ -45,6 +44,10 @@ body {
     align-items: center;
 
     overflow: hidden;
+
+    &::backdrop {
+        background-color: transparent;
+    }
 }
 
 #container {
@@ -55,18 +58,14 @@ body {
     justify-content: center;
 
     /* border: 1px var(--black) solid; */
-
-    &::backdrop {
-        background-color: transparent;
-    }
 }
 
 #texture {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
     pointer-events: none;
-    z-index: 1000;
+    z-index: 10000;
     opacity: 0.1;
     /* mix-blend-mode: overlay; */
     filter: sepia(100%);
@@ -99,6 +98,8 @@ button {
 
     background: none;
     border: none;
+
+    color: #111;
 
     &:hover {
         scale: 1.05;
