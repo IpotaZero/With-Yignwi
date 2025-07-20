@@ -1,11 +1,11 @@
 @font-face {
     font-family: dot;
-    src: url(/assets/KH-Dot-Hibiya-32.ttf);
+    src: url(../assets/KH-Dot-Hibiya-32.ttf);
 }
 
 @font-face {
     font-family: mincho;
-    src: url(/assets/NewTegomin-Regular.ttf);
+    src: url(../assets/NewTegomin-Regular.ttf);
 }
 
 * {
