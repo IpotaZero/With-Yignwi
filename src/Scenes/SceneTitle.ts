@@ -89,7 +89,11 @@ export class SceneTitle {
         }
 
         container.querySelector<HTMLElement>("#fullscreen")!.onclick = () => {
-            container.requestFullscreen({ "navigationUI": "auto" })
+            if (document.fullscreenElement) {
+                document.exitFullscreen()
+            } else {
+                container.requestFullscreen()
+            }
         }
     }
 }
