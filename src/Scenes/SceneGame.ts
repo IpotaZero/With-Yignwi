@@ -3,7 +3,7 @@ import { stages } from "../game/Stage.js"
 import { LocalStorage } from "../LocalStorage.js"
 import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
-import { Paint } from "../utils/Paint.js"
+import { Paint } from "../game/Paint.js"
 import { SceneTitle } from "./SceneTitle.js"
 
 export class SceneGame {
@@ -24,7 +24,10 @@ export class SceneGame {
         this.#cells.setBoard(stage)
         this.#countDenominator = this.#setupCountDenominator(stage.periods, stage.clicks)
 
-        paint && (this.#paint = paint)
+        if (paint) {
+            this.#paint = paint
+            this.#paint.reset()
+        }
 
         this.ready = this.#setup()
     }
@@ -47,7 +50,7 @@ export class SceneGame {
     }
 
     async #loadPage() {
-        const html = await fetch("pages/game.html").then((res) => res.text())
+        const html = await fetch("pages/game.html", { cache: "no-store" }).then((res) => res.text())
         page(document.getElementById("container")!, "#game", html)
 
         this.#dom = new SceneGameDom()
@@ -105,19 +108,29 @@ export class SceneGame {
             new SceneGame(this.#stageId, this.#paint)
         }
 
-        this.#dom.next.onclick = async () => {
+        const setData = () => {
             LocalStorage.setData(this.#stageId, {
                 cleared: true,
                 leastCleared: this.#countDenominator === this.#count,
             })
+        }
+
+        this.#dom.next.onclick = async () => {
+            setData()
 
             await Awaits.fade(this.#dom.container, () => new SceneGame(this.#stageId + 1).ready)
+        }
+
+        this.#dom.backChapterSelect.onclick = async () => {
+            setData()
+
+            await Awaits.fade(this.#dom.container, () => new SceneTitle("#title #stage-select").ready)
         }
     }
 
     #onCellClick() {
         if (this.#cells.getBoardVector().every((c) => c === 0)) {
-            this.#dom.next.classList.add("visible")
+            ;(this.#stageId % 5 === 4 ? this.#dom.backChapterSelect : this.#dom.next).classList.add("visible")
             this.#cells.cells.classList.add("proof")
         }
 
@@ -135,6 +148,7 @@ class SceneGameDom {
     back: HTMLElement
     reset: HTMLElement
     next: HTMLElement
+    backChapterSelect: HTMLElement
 
     middle: HTMLElement
 
@@ -149,7 +163,8 @@ class SceneGameDom {
         this.stageId = this.container.querySelector("#stage-id")!
         this.back = this.container.querySelector(".back")!
         this.reset = this.container.querySelector(".reset")!
-        this.next = this.container.querySelector("#next button")!
+        this.next = this.container.querySelector("#next .normal")!
+        this.backChapterSelect = this.container.querySelector("#next .chapter-end")!
         this.middle = this.container.querySelector("#middle")!
         this.click = this.container.querySelector("#click")!
         this.paint = this.container.querySelector("#paint")!

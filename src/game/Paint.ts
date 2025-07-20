@@ -8,6 +8,11 @@ export class Paint {
 
     constructor() {
         this.#setup()
+        this.reset()
+    }
+
+    reset() {
+        this.#mode = "untouchable"
         this.#eraser.classList.add("eraser", "hidden")
         this.#cvs.classList.add("untouchable")
     }

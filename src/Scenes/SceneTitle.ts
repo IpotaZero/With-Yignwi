@@ -1,5 +1,5 @@
 import { LocalStorage } from "../LocalStorage.js"
-import { setupParticle } from "../run.js"
+import { fall, setupParticle } from "../Particles.js"
 import { SE } from "../SE.js"
 import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
@@ -16,9 +16,11 @@ export class SceneTitle {
     async #loadPage(pageHistory: string) {
         const container = document.getElementById("container")!
 
-        const html = await fetch("pages/title.html").then((response) => response.text())
+        const html = await fetch("pages/title.html", { cache: "no-store" }).then((response) => response.text())
 
         page(container, pageHistory, html)
+
+        // fall(container)
 
         this.#setupButtons()
     }

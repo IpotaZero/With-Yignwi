@@ -1,7 +1,7 @@
-import { setupParticle } from "../run"
-import { Awaits } from "../utils/Awaits"
-import { page } from "../utils/Page"
-import { SceneTitle } from "./SceneTitle"
+import { setupParticle } from "../Particles.js"
+import { Awaits } from "../utils/Awaits.js"
+import { page } from "../utils/Page.js"
+import { SceneTitle } from "./SceneTitle.js"
 
 export class SceneNovel {
     ready: Promise<void>
@@ -13,7 +13,7 @@ export class SceneNovel {
     async #loadPage(index: number) {
         const container = document.getElementById("container")!
 
-        const html = await fetch("pages/novel.html").then((res) => res.text())
+        const html = await fetch("pages/novel.html", { cache: "no-store" }).then((res) => res.text())
         page(container, "#chapter" + index, html)
 
         container.querySelectorAll<HTMLElement>(".page").forEach(setupParticle)
