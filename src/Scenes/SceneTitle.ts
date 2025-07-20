@@ -87,5 +87,9 @@ export class SceneTitle {
                 chapterButtons[i + 1]?.classList.remove("hidden")
             }
         }
+
+        container.querySelector<HTMLElement>("#fullscreen")!.onclick = () => {
+            container.requestFullscreen({ "navigationUI": "auto" })
+        }
     }
 }

@@ -55,6 +55,10 @@ body {
     justify-content: center;
 
     /* border: 1px var(--black) solid; */
+
+    &::backdrop {
+        background-color: transparent;
+    }
 }
 
 #texture {
