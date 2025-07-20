@@ -1,4 +1,4 @@
-import { createSquareWeightMatrix } from "./Weight"
+import { createSquareWeightMatrix } from "./Weight.js"
 
 export type Stage = {
     rows: number
@@ -78,7 +78,6 @@ export const stages: Stage[] = [
         clicks: [0, 3],
         weight: () => createSquareWeightMatrix(1, 4),
     },
-
     {
         rows: 4,
         cols: 4,
@@ -152,12 +151,36 @@ export const stages: Stage[] = [
         rows: 4,
         cols: 4,
         periods: [
-            [3, 3, 3, 2],
-            [3, 1, 1, 2],
-            [3, 1, 1, 2],
-            [2, 2, 2, 2],
+            [1, 2, 2, 1],
+            [2, 3, 3, 2],
+            [2, 3, 3, 2],
+            [1, 2, 2, 1],
         ].flat(),
         clicks: [4, 6, 9, 2, 13, 6, 8],
+        weight: () => createSquareWeightMatrix(4, 4),
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [2, 2, 2, 4],
+            [2, 2, 2, 4],
+            [3, 3, 3, 4],
+            [3, 3, 3, 4],
+        ].flat(),
+        clicks: [13, 3, 11, 6, 0, 3, 9],
+        weight: () => createSquareWeightMatrix(4, 4),
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [2, 2, 2, 4],
+            [2, 2, 2, 4],
+            [3, 3, 3, 4],
+            [3, 3, 3, 4],
+        ].flat(),
+        clicks: [],
         weight: () => createSquareWeightMatrix(4, 4),
     },
 ]
