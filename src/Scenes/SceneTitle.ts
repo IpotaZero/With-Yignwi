@@ -2,6 +2,7 @@ import { LocalStorage } from "../LocalStorage.js"
 import { fall, setupParticle } from "../Particles.js"
 import { SE } from "../SE.js"
 import { Awaits } from "../utils/Awaits.js"
+import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { SceneGame } from "./SceneGame.js"
 import { SceneNovel } from "./SceneNovel.js"
@@ -23,6 +24,9 @@ export class SceneTitle {
         // fall(container)
 
         this.#setupButtons()
+
+        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
+        // await BGM.play()
     }
 
     #setupButtons() {

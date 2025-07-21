@@ -1,5 +1,6 @@
 import { setupParticle } from "../Particles.js"
 import { Awaits } from "../utils/Awaits.js"
+import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { SceneTitle } from "./SceneTitle.js"
 
@@ -8,6 +9,8 @@ export class SceneNovel {
 
     constructor(index: number) {
         this.ready = this.#loadPage(index)
+
+        BGM.fadeOut(1000)
     }
 
     async #loadPage(index: number) {

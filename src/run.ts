@@ -1,7 +1,9 @@
 import { ScenePretitle } from "./Scenes/ScenePretitle.js"
 import { H, x } from "./test.js"
+import { BGM } from "./utils/BGM.js"
 
 document.addEventListener("DOMContentLoaded", () => {
+    BGM.init()
     new ScenePretitle()
 })
 

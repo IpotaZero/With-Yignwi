@@ -5,6 +5,7 @@ import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
 import { Paint } from "../game/Paint.js"
 import { SceneTitle } from "./SceneTitle.js"
+import { BGM } from "../utils/BGM.js"
 
 export class SceneGame {
     #cells: Cells
@@ -30,6 +31,8 @@ export class SceneGame {
         }
 
         this.ready = this.#setup()
+
+        BGM.fadeOut(1000)
     }
 
     #setupCountDenominator(periods: number[], clicks: number[]) {
