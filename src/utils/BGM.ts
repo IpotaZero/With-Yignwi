@@ -1,7 +1,10 @@
 export class BGM {
     static #context: AudioContext
     static #gain: GainNode
-    static #audio: HTMLAudioElement
+    static #audio: HTMLAudioElement | null = null
+    static #source: MediaElementAudioSourceNode | null = null
+
+    static path: string = ""
 
     static #initialized = false
     static init() {
@@ -14,33 +17,37 @@ export class BGM {
     }
 
     static fetch(path: string) {
-        this.#gain.gain.cancelScheduledValues(0)
-        this.#gain.gain.value = 1
         this.#audio?.pause()
+        this.#source?.disconnect()
+
+        this.path = path
 
         return new Promise<void>((resolve) => {
             this.#audio = new Audio(path)
             this.#audio.loop = true
 
-            const source = this.#context.createMediaElementSource(this.#audio)
-            source.connect(this.#gain)
+            this.#source = this.#context.createMediaElementSource(this.#audio)
+            this.#source.connect(this.#gain)
 
             if (this.#audio.readyState >= 2) {
                 resolve()
+                this.setVolume(1)
             } else {
                 this.#audio.oncanplay = () => {
                     resolve()
+                    this.setVolume(1)
                 }
             }
         })
     }
 
-    static play() {
-        return this.#audio.play()
+    static async play() {
+        await this.#context.resume()
+        await this.#audio?.play()
     }
 
     static pause() {
-        this.#audio.pause()
+        this.#audio?.pause()
     }
 
     static fadeOut(ms: number) {
@@ -52,5 +59,10 @@ export class BGM {
                 resolve()
             }, ms)
         })
+    }
+
+    static setVolume(volume: number) {
+        this.#gain.gain.cancelScheduledValues(0)
+        this.#gain.gain.value = volume
     }
 }

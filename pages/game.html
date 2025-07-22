@@ -2,7 +2,9 @@
     <div id="top">
         <button class="back">戻る　</button>
         <div id="paints">
-            <button id="click" class="on">い</button>
+            <button id="click" class="on">
+                <img src="./assets/images/pointer.png" />
+            </button>
             <button id="paint">
                 <img src="./assets/images/pen.png" />
             </button>
@@ -34,9 +36,9 @@
 
         width: 100%;
 
-        padding: 6vh;
+        padding: 6dvh;
 
-        margin: 0 2vh;
+        margin: 0 2dvh;
     }
 
     #top {
@@ -49,26 +51,28 @@
             margin-right: auto;
 
             text-align: left;
-            font-size: 8vh;
+            font-size: 8dvh;
+
+            white-space: nowrap;
         }
 
         & #paints {
             display: flex;
             flex-direction: row;
-            gap: 4vh;
+            gap: 4dvh;
 
             & button {
                 height: 100%;
                 aspect-ratio: 1;
 
-                border: var(--black) 0.2vh solid;
+                border: var(--black) 0.2dvh solid;
 
                 animation: fade-in 0.1s;
 
-                font-size: 8vh;
+                font-size: 8dvh;
 
                 &.on {
-                    border: var(--black) 0.2vh dashed;
+                    border: var(--black) 0.2dvh dashed;
                     cursor: auto;
 
                     opacity: 0.5;
@@ -80,8 +84,9 @@
                 }
 
                 & img {
-                    height: 8vh;
+                    height: 8dvh;
                     image-rendering: pixelated;
+                    object-fit: contain;
                 }
             }
         }
@@ -90,13 +95,16 @@
             margin-left: auto;
 
             text-align: right;
-            font-size: 8vh;
+            font-size: 8dvh;
+
+            white-space: nowrap;
         }
     }
 
     #middle {
         display: flex;
         width: 100%;
+
         justify-content: space-evenly;
 
         flex-shrink: 0;
@@ -105,7 +113,7 @@
     #bottom {
         display: flex;
         width: 100%;
-        height: 8vh;
+        height: 8dvh;
 
         z-index: 10;
 
@@ -113,7 +121,7 @@
             flex: 1;
             text-align: left;
             line-height: 1;
-            font-size: 8vh;
+            font-size: 8dvh;
 
             white-space: nowrap;
         }
@@ -122,7 +130,7 @@
             flex: 1;
             text-align: center;
             line-height: 1;
-            font-size: 8vh;
+            font-size: 8dvh;
         }
 
         & #next {
@@ -133,10 +141,10 @@
 
             margin: 0 auto;
 
-            font-size: 8vh;
+            font-size: 8dvh;
 
             & button {
-                font-size: 8vh;
+                font-size: 8dvh;
                 display: none;
                 padding: 0;
 
@@ -152,8 +160,8 @@
         position: relative;
         display: grid;
 
-        width: calc(20vh + 20vw);
-        border: 0.1vh var(--black) solid;
+        width: 60dvh;
+        border: 0.1dvh var(--black) solid;
 
         &.proof {
             pointer-events: none;
@@ -166,11 +174,11 @@
         --two: hsl(0, 100%, 40%);
         --three: hsl(45, 100%, 40%);
         --four: hsl(90, 100%, 40%);
-        --five: hsl(135, 100%, 40%);
-        --six: hsl(180, 100%, 40%);
-        --seven: hsl(225, 100%, 40%);
-        --eight: hsl(270, 100%, 40%);
-        --nine: hsl(315, 100%, 40%);
+        --five: hsl(180, 100%, 40%);
+        --six: hsl(225, 100%, 40%);
+        --seven: hsl(270, 100%, 50%);
+        --eight: hsl(315, 100%, 40%);
+        --nine: hsl(360, 100%, 30%);
     }
 
     .cell {
@@ -182,7 +190,7 @@
         align-items: center;
 
         aspect-ratio: 1;
-        border: 0.1vh var(--black) solid;
+        border: 0.1dvh var(--black) solid;
 
         cursor: pointer;
 
@@ -198,7 +206,7 @@
             right: 0;
             opacity: 0.7;
             position: absolute;
-            font-size: 3.5vh;
+            font-size: 3.5dvh;
         }
 
         &[data-hover="1"]::after {
@@ -236,6 +244,10 @@
         &[value="5"] {
             color: var(--five);
         }
+
+        &[value="6"] {
+            color: var(--six);
+        }
     }
 
     [name="period"] {
@@ -244,9 +256,9 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        width: 4vh;
+        width: 4dvh;
 
-        font-size: 4vh;
+        font-size: 4dvh;
 
         background: none;
         border: none;
@@ -255,9 +267,9 @@
     [name="value"] {
         text-align: center;
 
-        font-size: 6vh;
+        font-size: 6dvh;
         pointer-events: none;
-        width: 8vh;
+        width: 8dvh;
 
         background: none;
         border: none;
@@ -271,6 +283,8 @@
 
         image-rendering: pixelated;
 
+        touch-action: none;
+
         &.untouchable {
             pointer-events: none;
         }
@@ -283,6 +297,6 @@
 
         pointer-events: none;
 
-        border: var(--black) 0.2vh solid;
+        border: var(--black) 0.2dvh solid;
     }
 </style>

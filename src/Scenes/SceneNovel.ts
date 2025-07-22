@@ -2,15 +2,13 @@ import { setupParticle } from "../Particles.js"
 import { Awaits } from "../utils/Awaits.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
-import { SceneTitle } from "./SceneTitle.js"
 
 export class SceneNovel {
     ready: Promise<void>
 
     constructor(index: number) {
         this.ready = this.#loadPage(index)
-
-        BGM.fadeOut(1000)
+        this.#playBgm()
     }
 
     async #loadPage(index: number) {
@@ -23,10 +21,16 @@ export class SceneNovel {
 
         container.querySelectorAll<HTMLElement>(".back").forEach((button) => {
             button.onclick = async () => {
-                await Awaits.fadeOut(container)
-                new SceneTitle("#title #stage-select #chapter" + index)
+                const { SceneTitle } = await import("./SceneTitle.js")
+                await Awaits.fade(container, () => new SceneTitle("#title #stage-select #chapter" + index).ready)
             }
         })
+    }
+
+    async #playBgm() {
+        await BGM.fadeOut(1000)
+        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
+        await BGM.play()
     }
 }
 

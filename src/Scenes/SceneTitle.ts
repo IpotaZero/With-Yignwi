@@ -4,14 +4,13 @@ import { SE } from "../SE.js"
 import { Awaits } from "../utils/Awaits.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
-import { SceneGame } from "./SceneGame.js"
-import { SceneNovel } from "./SceneNovel.js"
 
 export class SceneTitle {
     ready: Promise<void>
 
     constructor(pageHistory: string) {
         this.ready = this.#loadPage(pageHistory)
+        this.#playBgm()
     }
 
     async #loadPage(pageHistory: string) {
@@ -24,9 +23,12 @@ export class SceneTitle {
         // fall(container)
 
         this.#setupButtons()
+    }
 
-        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
-        // await BGM.play()
+    async #playBgm() {
+        await BGM.fadeOut(1000)
+        await BGM.fetch("./assets/sounds/nontrapezodihedron.m4a")
+        await BGM.play()
     }
 
     #setupButtons() {
@@ -44,6 +46,7 @@ export class SceneTitle {
 
         stageButtons.forEach((button, index) => {
             button.onclick = async () => {
+                const { SceneGame } = await import("./SceneGame.js")
                 await Awaits.fade(container, () => new SceneGame(index).ready)
             }
         })
@@ -52,8 +55,8 @@ export class SceneTitle {
 
         novelButtons.forEach((button, index) => {
             button.onclick = async () => {
-                await Awaits.fadeOut(container)
-                new SceneNovel(index)
+                const { SceneNovel } = await import("./SceneNovel.js")
+                await Awaits.fade(container, () => new SceneNovel(index).ready)
             }
         })
 
@@ -79,7 +82,7 @@ export class SceneTitle {
             }
         })
 
-        for (const i of Array(2).keys()) {
+        for (const i of chapterButtons.keys()) {
             if (stageResults.slice(i * 5, i * 5 + 5).every((stage) => stage.leastCleared)) {
                 chapterButtons[i].innerHTML += `<br>★`
                 chapterButtons[i + 1]?.classList.remove("hidden")
@@ -99,5 +102,7 @@ export class SceneTitle {
                 document.body.requestFullscreen()
             }
         }
+
+        fall(container.querySelector("#title")!)
     }
 }

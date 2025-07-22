@@ -1,6 +1,5 @@
 import { Awaits } from "../utils/Awaits"
 import { page } from "../utils/Page"
-import { SceneTitle } from "./SceneTitle"
 
 export class ScenePretitle {
     constructor() {
@@ -11,20 +10,22 @@ export class ScenePretitle {
             "#pretitle",
             `
                 <div class="page" id="pretitle">
-                    <button>Presented by MCR</button>
+                    <button>提供: 大阪公立大学マイコン研究会</button>
                 </div>
 
                 <style>
                     #pretitle button {
                         width: 100%;
                         height: 100%;
-                        font-size: 12vh;
+                        font-size: 8dvh;
                     }
                 </style>
             `,
         )
 
         container.querySelector("button")!.onclick = async () => {
+            const { SceneTitle } = await import("./SceneTitle.js")
+
             await Awaits.fade(container, () => new SceneTitle("#title").ready)
         }
     }

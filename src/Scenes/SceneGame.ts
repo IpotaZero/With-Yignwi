@@ -4,7 +4,6 @@ import { LocalStorage } from "../LocalStorage.js"
 import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
 import { Paint } from "../game/Paint.js"
-import { SceneTitle } from "./SceneTitle.js"
 import { BGM } from "../utils/BGM.js"
 
 export class SceneGame {
@@ -32,7 +31,7 @@ export class SceneGame {
 
         this.ready = this.#setup()
 
-        BGM.fadeOut(1000)
+        this.#playBgm()
     }
 
     #setupCountDenominator(periods: number[], clicks: number[]) {
@@ -50,6 +49,14 @@ export class SceneGame {
         this.#initUI()
         this.#setupPaintButtons()
         this.#setupEventHandlers()
+    }
+
+    async #playBgm() {
+        if (BGM.path === "./assets/sounds/野晒しの地獄.m4a") return
+
+        await BGM.fadeOut(1000)
+        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
+        await BGM.play()
     }
 
     async #loadPage() {
@@ -103,8 +110,12 @@ export class SceneGame {
         this.#cells.onclick = () => this.#onCellClick()
 
         this.#dom.back.onclick = async () => {
-            await Awaits.fadeOut(this.#dom.container)
-            new SceneTitle("#title #stage-select #chapter" + Math.floor(this.#stageId / 5))
+            const { SceneTitle } = await import("./SceneTitle.js")
+
+            await Awaits.fade(
+                this.#dom.container,
+                () => new SceneTitle("#title #stage-select #chapter" + Math.floor(this.#stageId / 5)).ready,
+            )
         }
 
         this.#dom.reset.onclick = () => {
@@ -126,6 +137,8 @@ export class SceneGame {
 
         this.#dom.backChapterSelect.onclick = async () => {
             setData()
+
+            const { SceneTitle } = await import("./SceneTitle.js")
 
             await Awaits.fade(this.#dom.container, () => new SceneTitle("#title #stage-select").ready)
         }

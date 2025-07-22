@@ -8,8 +8,12 @@ export function fall(container: HTMLElement) {
             position: fixed;
             pointer-events: none;
 
-            width: 12vh;
-            height: 12vh;
+            width: 12dvh;
+            height: 12dvh;
+
+            mix-blend-mode: overlay;
+
+            opacity: 0;
         }
 
         @keyframes fall{
@@ -19,8 +23,8 @@ export function fall(container: HTMLElement) {
                 transform: rotate(0);
             }
 
-            50% {
-                opacity: 0.05;
+            25% {
+                opacity: 0.1;
             }
 
             100% {
@@ -38,9 +42,10 @@ export function fall(container: HTMLElement) {
         particle.style.left = `${r * 100}%`
         particle.style.scale = "" + (Math.random() / 2 + 0.8)
         particle.style.animation = `fall ${Math.random() * 6 + 6}s linear infinite`
+        particle.style.animationDelay = `${Math.random() * 8}s`
     }
 
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < 24; i++) {
         const particle = img.cloneNode() as HTMLImageElement
         particle.classList.add("falling-particle")
 
@@ -64,10 +69,10 @@ export function setupParticle(page: HTMLElement) {
             const particle = img.cloneNode() as HTMLImageElement
             particle.style.position = "fixed"
             particle.style.pointerEvents = "none"
-            particle.style.left = `calc(${rect.left + x}px - 4vh)`
-            particle.style.top = `calc(${rect.top + y}px - 4vh)`
-            particle.style.width = "8vh"
-            particle.style.height = "8vh"
+            particle.style.left = `calc(${rect.left + x}px - 4dvh)`
+            particle.style.top = `calc(${rect.top + y}px - 4dvh)`
+            particle.style.width = "8dvh"
+            particle.style.height = "8dvh"
             particle.style.scale = "" + (Math.random() / 2 + 0.8)
             particle.style.opacity = "" + Math.random() * 0.5
             particle.style.transition = "transform 1s ease-out, opacity 1s ease-out"
@@ -77,9 +82,9 @@ export function setupParticle(page: HTMLElement) {
             const angle = (Math.PI * 2 * i) / 8 + Math.random()
             const distance = 60 + Math.random() * 20
             requestAnimationFrame(() => {
-                particle.style.transform = `translate(${(Math.cos(angle) * distance) / 8}vh, ${
+                particle.style.transform = `translate(${(Math.cos(angle) * distance) / 8}dvh, ${
                     (Math.sin(angle) * distance) / 8
-                }vh) scale(0.5) rotate(${(angle / Math.PI) * 180 * (Math.random() - 0.5)}deg)`
+                }dvh) scale(0.5) rotate(${(angle / Math.PI) * 180 * (Math.random() - 0.5)}deg)`
                 particle.style.opacity = "0"
             })
 

@@ -5,7 +5,7 @@ export function page(container: HTMLElement, currentPageSelector: string, html: 
     history.push(...currentPageSegments.slice(0, -1))
     history.push(currentPageSegments.at(-1)!)
 
-    container.style.opacity = "0"
+    // container.style.opacity = "0"
     container.innerHTML = html
 
     const pages = container.querySelectorAll(".page")
@@ -25,14 +25,14 @@ export function page(container: HTMLElement, currentPageSelector: string, html: 
 
                 setTimeout(resolve, 200)
             })
+
+            container.style.opacity = "1"
+            container.style.pointerEvents = ""
         }
 
         pages.forEach((page) => {
             page.classList.toggle("hidden", page !== targetPage)
         })
-
-        container.style.opacity = "1"
-        container.style.pointerEvents = ""
     }
 
     changePage(currentPageSegments.at(-1)!, true)

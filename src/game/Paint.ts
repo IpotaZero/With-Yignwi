@@ -12,9 +12,7 @@ export class Paint {
     }
 
     reset() {
-        this.#mode = "untouchable"
-        this.#eraser.classList.add("eraser", "hidden")
-        this.#cvs.classList.add("untouchable")
+        this.setMode("untouchable")
     }
 
     getElements() {
@@ -32,6 +30,8 @@ export class Paint {
     }
 
     #setup() {
+        this.#ctx.imageSmoothingEnabled = false
+
         const container = document.getElementById("container")!
 
         let drawing = false
@@ -62,38 +62,42 @@ export class Paint {
 
         const drawLine = (x: number, y: number, lineWidth: number) => {
             if (!drawing) return
-            this.#ctx.beginPath()
-            this.#ctx.imageSmoothingEnabled = false
+
             this.#ctx.lineWidth = lineWidth
             this.#ctx.strokeStyle = "#111"
+
+            this.#ctx.beginPath()
             this.#ctx.moveTo(lastX, lastY)
             this.#ctx.lineTo(x, y)
             this.#ctx.stroke()
+
             lastX = x
             lastY = y
         }
 
         const erase = (x: number, y: number) => {
             if (!drawing) return
+
             const size = 24
             this.#eraser.style.left = `${x - size / 2}px`
             this.#eraser.style.top = `${y - size / 2}px`
             this.#ctx.clearRect(x - size / 2, y - size / 2, size, size)
         }
 
-        const stopDrawing = () => {
-            drawing = false
-        }
+        const down = (e: PointerEvent) => {
+            e.preventDefault()
 
-        this.#cvs.addEventListener("pointerdown", (e: PointerEvent) => {
             const pos = getPos(e)
             startDrawing(pos.x, pos.y)
-            this.#cvs.setPointerCapture(e.pointerId)
-        })
+        }
+
+        this.#cvs.addEventListener("pointerdown", down)
 
         this.#cvs.addEventListener("pointermove", (e: PointerEvent) => {
             if (!drawing) return
+
             const pos = getPos(e)
+
             if (this.#mode === "paint") {
                 drawLine(pos.x, pos.y, 4)
             } else {
@@ -101,14 +105,11 @@ export class Paint {
             }
         })
 
-        this.#cvs.addEventListener("pointerup", (e: PointerEvent) => {
-            stopDrawing()
-            this.#cvs.releasePointerCapture(e.pointerId)
-        })
+        const stopDrawing = (e: PointerEvent) => {
+            drawing = false
+        }
 
-        this.#cvs.addEventListener("pointercancel", (e: PointerEvent) => {
-            stopDrawing()
-            this.#cvs.releasePointerCapture(e.pointerId)
-        })
+        this.#cvs.addEventListener("pointerup", stopDrawing)
+        this.#cvs.addEventListener("pointercancel", stopDrawing)
     }
 }

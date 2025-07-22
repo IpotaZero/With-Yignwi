@@ -18,7 +18,7 @@
 
     user-select: none;
 
-    font-size: 6vh;
+    font-size: 6dvh;
     font-family: dot, sans-serif;
 
     touch-action: manipulation;
@@ -62,7 +62,7 @@ body {
 
 #texture {
     position: fixed;
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     pointer-events: none;
     z-index: 10000;
@@ -81,7 +81,7 @@ body {
     width: 100%;
     height: 100%;
 
-    font-size: 4vh;
+    font-size: 4dvh;
 }
 
 .hidden {
@@ -89,8 +89,8 @@ body {
 }
 
 button {
-    padding: 1vh;
-    font-size: 4vh;
+    padding: 1dvh;
+    font-size: 4dvh;
 
     cursor: pointer;
 
@@ -112,7 +112,13 @@ button {
     position: absolute;
     opacity: 0;
     pointer-events: none;
-    font-size: 4vh;
+    font-size: 4dvh;
+}
+
+.loading {
+    right: 4dvh;
+    bottom: 4dvh;
+    position: absolute;
 }
 
 @media (orientation: portrait) {

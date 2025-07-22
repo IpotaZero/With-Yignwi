@@ -13,7 +13,7 @@
     <button data-back="1" class="back">戻る</button>
     <div id="explanation">
         <p>いくつかのマスをクリックして0だけにしよう。</p>
-        <p>自力で解くのが難しい場合は連立方程式を建てよう。</p>
+        <p>ホバーすると重み付けが見られます。</p>
     </div>
 </div>
 
@@ -84,15 +84,17 @@
 <style>
     .back {
         position: absolute;
-        left: 8vh;
-        top: 6vh;
+        left: 8dvh;
+        top: 6dvh;
         width: fit-content;
-        font-size: 8vh;
+        font-size: 8dvh;
     }
 
     p {
+        width: 100%;
         margin: 1.2em 0;
         line-height: 1.2;
+        text-align: center;
     }
 </style>
 
@@ -101,7 +103,7 @@
         height: 100%;
         width: 100%;
 
-        margin: 0 8vh;
+        margin: 0 8dvh;
     }
 
     h1 {
@@ -125,7 +127,7 @@
         display: flex;
         flex-direction: column;
 
-        gap: 1vh;
+        gap: 1dvh;
 
         & button {
             font-size: 5vw;
@@ -136,31 +138,31 @@
 <style>
     #how-to-play,
     #credit {
-        padding: 6vh;
+        padding: 6dvh;
     }
 </style>
 
 <style>
     #chapters {
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
 
         align-items: center;
         justify-content: space-around;
-        padding: 0 12vh;
+        padding: 0 12dvh;
 
         display: flex;
 
-        gap: 6vh;
+        gap: 6dvh;
 
         overflow-x: scroll;
     }
 
     .chapter-label {
         position: absolute;
-        top: 6vh;
+        top: 6dvh;
         width: fit-content;
-        font-size: 6vh;
+        font-size: 6dvh;
     }
 
     .stages {
@@ -170,34 +172,34 @@
 
         align-items: center;
         justify-content: space-evenly;
-        gap: 6vh;
+        gap: 6dvh;
 
-        height: 100vh;
+        height: 100dvh;
         width: 100vw;
 
-        padding: 0 8vh;
+        padding: 0 8dvh;
 
         overflow-x: auto;
     }
 
     .stage-button,
     .story-button {
-        height: 40vh;
+        height: 40dvh;
         aspect-ratio: 1;
 
-        padding: 2vh 4vh;
+        padding: 2dvh 4dvh;
 
-        border: 0.2vh var(--black) solid;
+        border: 0.2dvh var(--black) solid;
 
-        font-size: 6vh;
+        font-size: 6dvh;
     }
 
     .chapter-button {
-        height: 48vh;
+        height: 48dvh;
         aspect-ratio: 1;
 
-        border: 0.2vh var(--black) solid;
+        border: 0.2dvh var(--black) solid;
 
-        font-size: 8vh;
+        font-size: 8dvh;
     }
 </style>
