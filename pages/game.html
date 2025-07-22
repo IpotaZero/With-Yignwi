@@ -65,14 +65,14 @@
                 height: 100%;
                 aspect-ratio: 1;
 
-                border: var(--black) 0.2dvh solid;
+                border: var(--black) max(1px, 0.2dvh) solid;
 
                 animation: fade-in 0.1s;
 
                 font-size: 8dvh;
 
                 &.on {
-                    border: var(--black) 0.2dvh dashed;
+                    border: var(--black) max(1px, 0.2dvh) dashed;
                     cursor: auto;
 
                     opacity: 0.5;
@@ -161,7 +161,7 @@
         display: grid;
 
         width: 60dvh;
-        border: 0.1dvh var(--black) solid;
+        border: max(0.5px, 0.1dvh) var(--black) solid;
 
         &.proof {
             pointer-events: none;
@@ -190,7 +190,7 @@
         align-items: center;
 
         aspect-ratio: 1;
-        border: 0.1dvh var(--black) solid;
+        border: max(0.5px, 0.1dvh) var(--black) solid;
 
         cursor: pointer;
 

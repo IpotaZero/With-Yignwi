@@ -1,8 +1,13 @@
-import { Awaits } from "../utils/Awaits"
-import { page } from "../utils/Page"
+import { page } from "../utils/Page.js"
+import { Scene } from "./Scene.js"
+import { Scenes } from "./Scenes.js"
 
-export class ScenePretitle {
+export class ScenePretitle extends Scene {
+    ready: Promise<void> = Promise.resolve()
+
     constructor() {
+        super()
+
         const container = document.getElementById("container")!
 
         page(
@@ -25,8 +30,7 @@ export class ScenePretitle {
 
         container.querySelector("button")!.onclick = async () => {
             const { SceneTitle } = await import("./SceneTitle.js")
-
-            await Awaits.fade(container, () => new SceneTitle("#title").ready)
+            await Scenes.goto(() => new SceneTitle("#title"))
         }
     }
 }

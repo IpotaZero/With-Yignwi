@@ -1,14 +1,17 @@
 import { LocalStorage } from "../LocalStorage.js"
 import { fall, setupParticle } from "../Particles.js"
 import { SE } from "../SE.js"
-import { Awaits } from "../utils/Awaits.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
+import { Scene } from "./Scene.js"
+import { Scenes } from "./Scenes.js"
 
-export class SceneTitle {
+export class SceneTitle extends Scene {
     ready: Promise<void>
 
     constructor(pageHistory: string) {
+        super()
+
         this.ready = this.#loadPage(pageHistory)
         this.#playBgm()
     }
@@ -23,6 +26,7 @@ export class SceneTitle {
         // fall(container)
 
         this.#setupButtons()
+        this.#setupVolumeSetting()
     }
 
     async #playBgm() {
@@ -47,7 +51,7 @@ export class SceneTitle {
         stageButtons.forEach((button, index) => {
             button.onclick = async () => {
                 const { SceneGame } = await import("./SceneGame.js")
-                await Awaits.fade(container, () => new SceneGame(index).ready)
+                await Scenes.goto(() => new SceneGame(index))
             }
         })
 
@@ -56,7 +60,7 @@ export class SceneTitle {
         novelButtons.forEach((button, index) => {
             button.onclick = async () => {
                 const { SceneNovel } = await import("./SceneNovel.js")
-                await Awaits.fade(container, () => new SceneNovel(index).ready)
+                await Scenes.goto(() => new SceneNovel(index))
             }
         })
 
@@ -64,7 +68,6 @@ export class SceneTitle {
 
         buttons.forEach((button) => {
             button.onmouseover = () => {
-                SE.cursor.currentTime = 0
                 SE.cursor.play()
             }
         })
@@ -104,5 +107,31 @@ export class SceneTitle {
         }
 
         fall(container.querySelector("#title")!)
+    }
+
+    #setupVolumeSetting() {
+        const container = document.getElementById("container")!
+
+        const volumeBGM = container.querySelector<HTMLInputElement>(".volume-bgm")!
+
+        volumeBGM.oninput = () => {
+            BGM.setVolume(+volumeBGM.value)
+            SE.ok.play()
+            LocalStorage.setBGMVolume(+volumeBGM.value)
+        }
+
+        volumeBGM.value = "" + LocalStorage.getBGMVolume()
+        BGM.setVolume(LocalStorage.getBGMVolume())
+
+        const volumeSE = container.querySelector<HTMLInputElement>(".volume-se")!
+
+        volumeSE.oninput = () => {
+            SE.setVolume(+volumeSE.value)
+            SE.ok.play()
+            LocalStorage.setSEVolume(+volumeSE.value)
+        }
+
+        volumeSE.value = "" + LocalStorage.getSEVolume()
+        SE.setVolume(LocalStorage.getSEVolume())
     }
 }

@@ -4,6 +4,8 @@ export class BGM {
     static #audio: HTMLAudioElement | null = null
     static #source: MediaElementAudioSourceNode | null = null
 
+    static #volume = 1
+
     static path: string = ""
 
     static #initialized = false
@@ -31,11 +33,11 @@ export class BGM {
 
             if (this.#audio.readyState >= 2) {
                 resolve()
-                this.setVolume(1)
+                this.setVolume(this.#volume)
             } else {
                 this.#audio.oncanplay = () => {
                     resolve()
-                    this.setVolume(1)
+                    this.setVolume(this.#volume)
                 }
             }
         })
@@ -62,7 +64,9 @@ export class BGM {
     }
 
     static setVolume(volume: number) {
+        this.#volume = volume
+
         this.#gain.gain.cancelScheduledValues(0)
-        this.#gain.gain.value = volume
+        this.#gain.gain.value = this.#volume
     }
 }

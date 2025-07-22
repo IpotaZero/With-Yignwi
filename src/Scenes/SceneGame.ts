@@ -1,12 +1,13 @@
 import { Cells } from "../game/Cells.js"
 import { stages } from "../game/Stage.js"
 import { LocalStorage } from "../LocalStorage.js"
-import { Awaits } from "../utils/Awaits.js"
 import { page } from "../utils/Page.js"
 import { Paint } from "../game/Paint.js"
 import { BGM } from "../utils/BGM.js"
+import { Scene } from "./Scene.js"
+import { Scenes } from "./Scenes.js"
 
-export class SceneGame {
+export class SceneGame extends Scene {
     #cells: Cells
     #stageId: number
     #countDenominator: number
@@ -18,6 +19,8 @@ export class SceneGame {
     ready: Promise<void>
 
     constructor(stageId: number, paint?: Paint) {
+        super()
+
         this.#stageId = stageId
         const stage = stages[stageId]
         this.#cells = new Cells(stage)
@@ -77,6 +80,12 @@ export class SceneGame {
         this.#dom.stageId.textContent = `
             第${c[Math.floor(this.#stageId / 5)]}章 ${c[this.#stageId % 5]}幕
         `
+        const data = LocalStorage.getData()[this.#stageId]
+        if (data.leastCleared) {
+            this.#dom.stageId.textContent += "★"
+        } else if (data.cleared) {
+            this.#dom.stageId.textContent += "☆"
+        }
     }
 
     #setupPaintButtons() {
@@ -111,11 +120,7 @@ export class SceneGame {
 
         this.#dom.back.onclick = async () => {
             const { SceneTitle } = await import("./SceneTitle.js")
-
-            await Awaits.fade(
-                this.#dom.container,
-                () => new SceneTitle("#title #stage-select #chapter" + Math.floor(this.#stageId / 5)).ready,
-            )
+            await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + Math.floor(this.#stageId / 5)))
         }
 
         this.#dom.reset.onclick = () => {
@@ -131,16 +136,14 @@ export class SceneGame {
 
         this.#dom.next.onclick = async () => {
             setData()
-
-            await Awaits.fade(this.#dom.container, () => new SceneGame(this.#stageId + 1).ready)
+            await Scenes.goto(() => new SceneGame(this.#stageId + 1))
         }
 
         this.#dom.backChapterSelect.onclick = async () => {
             setData()
 
             const { SceneTitle } = await import("./SceneTitle.js")
-
-            await Awaits.fade(this.#dom.container, () => new SceneTitle("#title #stage-select").ready)
+            await Scenes.goto(() => new SceneTitle("#title #stage-select"))
         }
     }
 

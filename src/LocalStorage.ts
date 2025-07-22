@@ -20,6 +20,22 @@ export class LocalStorage {
             })),
         ).flat()
     }
+
+    static getBGMVolume(): number {
+        return +(localStorage.getItem("bgm-volume") ?? "1")
+    }
+
+    static setBGMVolume(volume: number) {
+        localStorage.setItem("bgm-volume", "" + volume)
+    }
+
+    static getSEVolume(): number {
+        return +(localStorage.getItem("se-volume") ?? "1")
+    }
+
+    static setSEVolume(volume: number) {
+        localStorage.setItem("se-volume", "" + volume)
+    }
 }
 
 type Data = {

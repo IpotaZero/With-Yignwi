@@ -8,6 +8,7 @@ export class Paint {
 
     constructor() {
         this.#setup()
+        this.#eraser.classList.add("eraser")
         this.reset()
     }
 
@@ -33,14 +34,15 @@ export class Paint {
         this.#ctx.imageSmoothingEnabled = false
 
         const container = document.getElementById("container")!
+        const r = window.devicePixelRatio
 
         let drawing = false
         let lastX = 0
         let lastY = 0
 
         const resizeCanvas = () => {
-            this.#cvs.width = container.clientWidth
-            this.#cvs.height = container.clientHeight
+            this.#cvs.width = ~~(container.clientWidth * r)
+            this.#cvs.height = ~~(container.clientHeight * r)
         }
 
         resizeCanvas()
@@ -49,8 +51,8 @@ export class Paint {
         const getPos = (e: PointerEvent) => {
             const rect = this.#cvs.getBoundingClientRect()
             return {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
+                x: (e.clientX - rect.left) * r,
+                y: (e.clientY - rect.top) * r,
             }
         }
 
@@ -78,9 +80,9 @@ export class Paint {
         const erase = (x: number, y: number) => {
             if (!drawing) return
 
-            const size = 24
-            this.#eraser.style.left = `${x - size / 2}px`
-            this.#eraser.style.top = `${y - size / 2}px`
+            const size = 24 * r
+            this.#eraser.style.left = `${(x - size / 2) / r}px`
+            this.#eraser.style.top = `${(y - size / 2) / r}px`
             this.#ctx.clearRect(x - size / 2, y - size / 2, size, size)
         }
 
@@ -99,7 +101,7 @@ export class Paint {
             const pos = getPos(e)
 
             if (this.#mode === "paint") {
-                drawLine(pos.x, pos.y, 4)
+                drawLine(pos.x, pos.y, 8)
             } else {
                 erase(pos.x, pos.y)
             }
