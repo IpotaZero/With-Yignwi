@@ -1,26 +1,20 @@
 import { createSquareWeightMatrix } from "./game/Weight.js"
+import { lcm } from "./utils/gcd.js"
 import { solve } from "./utils/Solver.js"
 import { Z } from "./utils/Zn.js"
 
-const Zn = Z(4)
+const periods = [3, 3, 4, 4]
+const wholePeriod = periods.reduce((a, b) => lcm(a, b), 1)
 
-const A = createSquareWeightMatrix(4, 4).map((row) => row.map((n) => new Zn(n)))
+const Zn = Z(wholePeriod)
 
-const b = [
-    [2, 3, 3, 2],
-    [3, 1, 1, 3],
-    [3, 1, 1, 3],
-    [2, 3, 3, 2],
-]
-    .flat(1)
-    .map((n) => new Zn(n))
+const A = createSquareWeightMatrix(1, 4, periods).map((row) => row.map((n) => new Zn(n)))
+
+console.log(A.map((row) => row.map((n) => n.value)))
+
+const b = [[0, 2, 0, 3]].flat(1).map((n) => new Zn(-n))
 
 export const { x, H } = solve(A, b)
-
-console.log(
-    x?.map((n) => n.value),
-    H,
-)
 
 const dimKer = H.length
 

@@ -25,7 +25,7 @@ export class SceneGame extends Scene {
         const stage = stages[stageId]
         this.#cells = new Cells(stage)
         this.#cells.setBoard(stage)
-        this.#countDenominator = this.#setupCountDenominator(stage.periods, stage.clicks)
+        this.#countDenominator = this.#cells.minStep
 
         if (paint) {
             this.#paint = paint
@@ -37,14 +37,12 @@ export class SceneGame extends Scene {
         this.#playBgm()
     }
 
-    #setupCountDenominator(periods: number[], clicks: number[]) {
-        const b = Array(periods.length).fill(0)
+    async #playBgm() {
+        if (BGM.path === "./assets/sounds/野晒しの地獄.mp3") return
 
-        clicks.forEach((n) => {
-            b[n] += 1
-        })
-
-        return b.map((n, i) => (periods[i] - n) % periods[i]).reduce((sum, a) => sum + a)
+        await BGM.fadeOut(1000)
+        await BGM.fetch("./assets/sounds/野晒しの地獄.mp3")
+        await BGM.play()
     }
 
     async #setup() {
@@ -52,14 +50,6 @@ export class SceneGame extends Scene {
         this.#initUI()
         this.#setupPaintButtons()
         this.#setupEventHandlers()
-    }
-
-    async #playBgm() {
-        if (BGM.path === "./assets/sounds/野晒しの地獄.m4a") return
-
-        await BGM.fadeOut(1000)
-        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
-        await BGM.play()
     }
 
     async #loadPage() {
@@ -73,7 +63,7 @@ export class SceneGame extends Scene {
         this.#dom.middle.appendChild(this.#cells.cells)
 
         this.#count = 0
-        this.#dom.count.textContent = `0/${this.#countDenominator}`
+        this.#setCount()
 
         const c = ["零", "一", "二", "三", "四", "五", "六"]
 
@@ -154,7 +144,12 @@ export class SceneGame extends Scene {
         }
 
         this.#count++
-        this.#dom.count.textContent = `${this.#count}/${this.#countDenominator}`
+        this.#setCount()
+    }
+
+    #setCount() {
+        const d = Number.isFinite(this.#countDenominator) ? this.#countDenominator : "?"
+        this.#dom.count.textContent = `0/${d}`
     }
 }
 

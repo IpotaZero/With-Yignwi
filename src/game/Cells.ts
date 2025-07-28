@@ -6,11 +6,18 @@ export class Cells {
 
     #weight: number[][]
 
+    minStep: number
+
     constructor(stage: Stage) {
         this.#weight = stage.weight()
+        this.minStep = this.#getMinStep(stage)
 
         this.cells.classList.add("cells")
         this.#createCells(stage)
+    }
+
+    #getMinStep(stage: Stage): number {
+        return stage.minStep
     }
 
     setBoard(stage: Stage) {

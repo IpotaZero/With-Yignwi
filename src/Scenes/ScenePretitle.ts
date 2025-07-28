@@ -22,7 +22,7 @@ export class ScenePretitle extends Scene {
                     #pretitle button {
                         width: 100%;
                         height: 100%;
-                        font-size: 8dvh;
+                        font-size: 5dvw;
                     }
                 </style>
             `,

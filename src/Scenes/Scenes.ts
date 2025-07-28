@@ -1,3 +1,4 @@
+import { Dom } from "../Dom.js"
 import { Awaits } from "../utils/Awaits.js"
 import { Scene } from "./Scene.js"
 
@@ -15,7 +16,7 @@ export class Scenes {
             hideLoading = this.#hideLoading,
         }: { showLoading?: () => void; hideLoading?: () => void } = {},
     ) {
-        const container = document.getElementById("container")!
+        const container = Dom.container
 
         await Awaits.fadeOut(container)
 

@@ -6,6 +6,10 @@ type Zn<N extends number> = InstanceType<ReturnType<typeof Z<N>>>
 export function solve<N extends number>(A: Zn<N>[][], b: Zn<N>[]) {
     const { L, U, P } = LU(A)
 
+    console.log(L.map((row) => row.map((n) => n.value)))
+    console.log(U.map((row) => row.map((n) => n.value)))
+    console.log(P)
+
     const invL = inv(L)
 
     const y = mul(

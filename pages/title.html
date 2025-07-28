@@ -51,6 +51,7 @@
         <button data-link="#chapter0" class="chapter-button">第零章</button>
         <button data-link="#chapter1" class="chapter-button">第一章</button>
         <button data-link="#chapter2" class="chapter-button">第二章</button>
+        <button data-link="#chapter3" class="chapter-button">第三章</button>
     </div>
 </div>
 
@@ -96,6 +97,20 @@
     <h2 class="chapter-label">──第二章──</h2>
 </div>
 
+<div class="page" id="chapter3">
+    <div class="stages">
+        <button class="story-button">物語</button>
+        <button class="stage-button">第零幕</button>
+        <button class="stage-button">第一幕</button>
+        <button class="stage-button">第二幕</button>
+        <button class="stage-button">第三幕</button>
+        <button class="stage-button">第四幕</button>
+    </div>
+
+    <button data-back="1" class="back">戻る</button>
+    <h2 class="chapter-label">──第三章──</h2>
+</div>
+
 <style>
     .back {
         position: absolute;
@@ -137,7 +152,7 @@
     #title-buttons {
         position: absolute;
         top: calc(44% - 3vw);
-        right: 0;
+        right: 4dvh;
 
         display: flex;
         flex-direction: column;
@@ -220,7 +235,7 @@
 
         padding: 2dvh 4dvh;
 
-        border: 0.2dvh var(--black) solid;
+        border: max(1px, 0.2dvh) var(--black) solid;
 
         font-size: 6dvh;
     }
@@ -229,7 +244,7 @@
         height: 48dvh;
         aspect-ratio: 1;
 
-        border: 0.2dvh var(--black) solid;
+        border: max(1px, 0.2dvh) var(--black) solid;
 
         font-size: 8dvh;
     }

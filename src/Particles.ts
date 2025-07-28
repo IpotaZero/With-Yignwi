@@ -24,7 +24,7 @@ export function fall(container: HTMLElement) {
             }
 
             25% {
-                opacity: 0.1;
+                opacity: 0.15;
             }
 
             100% {

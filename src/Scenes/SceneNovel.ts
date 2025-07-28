@@ -1,3 +1,4 @@
+import { Dom } from "../Dom.js"
 import { setupParticle } from "../Particles.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
@@ -15,7 +16,7 @@ export class SceneNovel extends Scene {
     }
 
     async #loadPage(index: number) {
-        const container = document.getElementById("container")!
+        const container = Dom.container
 
         const html = await fetch("pages/novel.html", { cache: "no-store" }).then((res) => res.text())
         page(container, "#chapter" + index, html)
@@ -32,7 +33,7 @@ export class SceneNovel extends Scene {
 
     async #playBgm() {
         await BGM.fadeOut(1000)
-        await BGM.fetch("./assets/sounds/野晒しの地獄.m4a")
+        await BGM.fetch("./assets/sounds/一切れの諧謔.mp3")
         await BGM.play()
     }
 }

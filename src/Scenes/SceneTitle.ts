@@ -1,3 +1,4 @@
+import { Dom } from "../Dom.js"
 import { LocalStorage } from "../LocalStorage.js"
 import { fall, setupParticle } from "../Particles.js"
 import { SE } from "../SE.js"
@@ -17,11 +18,9 @@ export class SceneTitle extends Scene {
     }
 
     async #loadPage(pageHistory: string) {
-        const container = document.getElementById("container")!
-
         const html = await fetch("pages/title.html", { cache: "no-store" }).then((response) => response.text())
 
-        page(container, pageHistory, html)
+        page(Dom.container, pageHistory, html)
 
         // fall(container)
 
@@ -31,12 +30,12 @@ export class SceneTitle extends Scene {
 
     async #playBgm() {
         await BGM.fadeOut(1000)
-        await BGM.fetch("./assets/sounds/nontrapezodihedron.m4a")
+        await BGM.fetch("./assets/sounds/nontrapezodihedron.mp3")
         await BGM.play()
     }
 
     #setupButtons() {
-        const container = document.getElementById("container")!
+        const container = Dom.container
 
         container.querySelectorAll<HTMLElement>(".page").forEach(setupParticle)
 
@@ -110,13 +109,13 @@ export class SceneTitle extends Scene {
     }
 
     #setupVolumeSetting() {
-        const container = document.getElementById("container")!
+        const container = Dom.container
 
         const volumeBGM = container.querySelector<HTMLInputElement>(".volume-bgm")!
 
         volumeBGM.oninput = () => {
             BGM.setVolume(+volumeBGM.value)
-            SE.ok.play()
+            // SE.ok.play()
             LocalStorage.setBGMVolume(+volumeBGM.value)
         }
 
@@ -127,7 +126,7 @@ export class SceneTitle extends Scene {
 
         volumeSE.oninput = () => {
             SE.setVolume(+volumeSE.value)
-            SE.ok.play()
+            // SE.ok.play()
             LocalStorage.setSEVolume(+volumeSE.value)
         }
 
