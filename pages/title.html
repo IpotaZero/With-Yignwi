@@ -14,6 +14,7 @@
     <button data-back="1" class="back">戻る</button>
     <div id="explanation">
         <p>いくつかのマスをクリックして0だけにしよう。</p>
+        <p>適当に押すも良し、ガチ攻略するも良し。</p>
         <p>ホバーすると重み付けが見られます。</p>
     </div>
 </div>
@@ -39,6 +40,7 @@
         SE: 効果音ラボ <br />
         <br />
         企画: いぽた <br />
+        BGM: うめぼし <br />
         制作: MCR <br />
         <a href="https://x.com/ocu_mcr" target="_blank">https://x.com/ocu_mcr</a>
     </div>
@@ -52,6 +54,8 @@
         <button data-link="#chapter1" class="chapter-button">第一章</button>
         <button data-link="#chapter2" class="chapter-button">第二章</button>
         <button data-link="#chapter3" class="chapter-button">第三章</button>
+        <button data-link="#chapter4" class="chapter-button">第四章</button>
+        <button data-link="#chapter5" class="chapter-button">第五章</button>
     </div>
 </div>
 
@@ -109,6 +113,34 @@
 
     <button data-back="1" class="back">戻る</button>
     <h2 class="chapter-label">──第三章──</h2>
+</div>
+
+<div class="page" id="chapter4">
+    <div class="stages">
+        <button class="story-button">物語</button>
+        <button class="stage-button">第零幕</button>
+        <button class="stage-button">第一幕</button>
+        <button class="stage-button">第二幕</button>
+        <button class="stage-button">第三幕</button>
+        <button class="stage-button">第四幕</button>
+    </div>
+
+    <button data-back="1" class="back">戻る</button>
+    <h2 class="chapter-label">──第四章──</h2>
+</div>
+
+<div class="page" id="chapter5">
+    <div class="stages">
+        <button class="story-button">物語</button>
+        <button class="stage-button">第零幕</button>
+        <button class="stage-button">第一幕</button>
+        <button class="stage-button">第二幕</button>
+        <button class="stage-button">第三幕</button>
+        <button class="stage-button">第四幕</button>
+    </div>
+
+    <button data-back="1" class="back">戻る</button>
+    <h2 class="chapter-label">──第五章──</h2>
 </div>
 
 <style>
@@ -194,14 +226,14 @@
         height: 100dvh;
 
         align-items: center;
-        justify-content: space-around;
-        padding: 0 12dvh;
+        justify-content: center;
 
-        display: flex;
+        padding: 8dvh 16dvh;
 
-        gap: 6dvh;
+        display: grid;
 
-        overflow-x: scroll;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .chapter-label {
@@ -241,11 +273,13 @@
     }
 
     .chapter-button {
-        height: 48dvh;
-        aspect-ratio: 1;
+        width: 80%;
+        aspect-ratio: 2/1;
 
         border: max(1px, 0.2dvh) var(--black) solid;
 
-        font-size: 8dvh;
+        font-size: 6dvh;
+
+        margin: auto;
     }
 </style>

@@ -14,6 +14,8 @@ export class Cells {
 
         this.cells.classList.add("cells")
         this.#createCells(stage)
+
+        console.log(this.#weight.map((row) => row.join("\t")).join("\n"))
     }
 
     #getMinStep(stage: Stage): number {
@@ -64,7 +66,7 @@ export class Cells {
 
     #onClickCell(index: number) {
         ;(Array.from(this.cells.children) as HTMLElement[]).forEach((cellElem, i) => {
-            const weight = this.#weight[index][i]
+            const weight = this.#weight[i][index]
 
             if (weight === 0) return
 
@@ -72,7 +74,12 @@ export class Cells {
             const period = +cellElem.querySelector<HTMLInputElement>('[name="period"]')!.value
 
             let value = parseInt(valueElem.value || "0", 10)
-            value = (value + 1) % period
+
+            if (period === Infinity) {
+                value = value + weight
+            } else {
+                value = (((value + weight) % period) + period) % period
+            }
 
             valueElem.setAttribute("value", value.toString())
 
@@ -91,7 +98,7 @@ export class Cells {
             cell.removeAttribute("data-hover")
         })
         ;(Array.from(this.cells.children) as HTMLElement[]).forEach((cell, i) => {
-            const weight = this.#weight[index][i]
+            const weight = this.#weight[i][index]
             weight !== 0 && (cell.dataset["hover"] = "" + weight)
         })
     }

@@ -4,7 +4,7 @@ export class BGM {
     static #audio: HTMLAudioElement | null = null
     static #source: MediaElementAudioSourceNode | null = null
 
-    static #volume = 1
+    static #volume = 0.5
 
     static path: string = ""
 
@@ -16,6 +16,8 @@ export class BGM {
         this.#context = new AudioContext()
         this.#gain = this.#context.createGain()
         this.#gain.connect(this.#context.destination)
+
+        this.setVolume(this.#volume)
     }
 
     static fetch(path: string) {

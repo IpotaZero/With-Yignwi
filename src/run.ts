@@ -3,7 +3,9 @@ import { LocalStorage } from "./LocalStorage.js"
 import { Scenes } from "./Scenes/Scenes.js"
 // import { H, x } from "./test.js"
 import { BGM } from "./utils/BGM.js"
+import { result } from "./utils/Solver3.js"
 // import { a } from "./utils/Solver2.js"
+result
 
 // console.log(a)
 

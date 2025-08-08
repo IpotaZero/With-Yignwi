@@ -77,9 +77,13 @@
         </p>
         <p>
             ゆぃぐぬぃ嬢は今日も静かだった。 一言も口を開かず、静かに筆を走らせていた。
-            あの笑みのことを思い出すたびに、心臓が一つ跳ねる。 あの紙は──ただの冗談ではない。
+            あの笑みのことを思い出すたびに、心臓が跳ねる。 あの紙は──ただの冗談ではない。
             私の心の奥で何かが少しずつ「形」を持ち始めている。
         </p>
+        <p>今日も紙片を渡しに行くと、彼女は突然立ち上がり、私の耳元で</p>
+        <p class="yignwi">「Thank you.」</p>
+        <p>と囁いた。</p>
+        <p>また心臓が一つ跳ねた。</p>
 
         <br />
         <br />
@@ -90,15 +94,33 @@
     <button class="back">戻る</button>
 </div>
 
-<div class="page chapter" id="chapter2">
+<div class="page chapter" id="chapter3">
     <div class="novel">
-        <p>十月三十日（日）曇</p>
-        <p>あ</p>
+        <p>十月三十日（日）雨</p>
+        <p>今日は雨が降っていた為一日中家にいた。</p>
+        <p>
+            しかし落ち着いてはいられなかった。飯を食べている時も、風呂に入っている間も、頭の中にはあのパズルがあった。
+        </p>
+        <p>星の門とはなんだ。それはどこにあるのか。向こう側には何があるのか。</p>
+        <p>・・・・・・考え過ぎるのは辞めよう。あれは只の謎解きだ。きっとゆぃぐぬぃ嬢の趣味なのだろう。</p>
+        <p>ゆぃぐぬぃ嬢が他の誰かにもパズルを渡しているとしたら。</p>
+        <p>少し、胸が苦しくなった。</p>
 
         <br />
         <br />
         <br />
         <br />
+    </div>
+
+    <button class="back">戻る</button>
+</div>
+
+<div class="page chapter" id="chapter6">
+    <div class="novel">
+        <p>
+            その爆発はきっと太陽系ぜんぶをのみこんでしまうくらい大きくて、 <br />
+            私たちは白い光に包まれて消えるのでしょう。
+        </p>
     </div>
 
     <button class="back">戻る</button>
@@ -111,43 +133,55 @@
         top: 6dvh;
         width: fit-content;
         font-size: 6dvh;
-        font-family: mincho, serif;
 
         background-color: #ffffffc0;
 
         border-bottom: #111 1px solid;
     }
 
-    .chapter {
+    #chapter6 .novel p {
+        font-size: 4vh;
+    }
+
+    .chapter:not(#chapter6) {
         padding: 0;
-    }
 
-    .novel {
-        padding: 6dvh 12dvh;
-
-        writing-mode: vertical-rl;
-        overflow-x: auto;
-        width: 100%;
-
-        & p {
+        .back {
             font-family: mincho, serif;
+        }
+
+        .novel {
+            padding: 6dvh 12dvh;
+
             writing-mode: vertical-rl;
+            overflow-x: auto;
+            width: 100%;
 
-            font-size: 2.5vw;
-            margin: 0 1.2em;
-            line-height: 1.2;
-        }
+            & p {
+                font-family: mincho, serif;
+                writing-mode: vertical-rl;
 
-        .yignwi {
-            font-size: 2vw;
-            font-family: dot;
-            text-orientation: sideways;
-            text-align: center;
-        }
+                font-size: 2.5vw;
+                margin: 0 1.2em;
+                line-height: 1.2;
+            }
 
-        & img {
-            height: 100%;
-            object-fit: contain;
+            .yignwi {
+                font-size: 2vw;
+                font-family: dot;
+                text-orientation: sideways;
+                text-align: center;
+            }
+
+            & img {
+                height: 100%;
+                object-fit: contain;
+            }
         }
     }
+
+    /* p {
+        pointer-events: all;
+        user-select: all;
+    } */
 </style>

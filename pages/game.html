@@ -209,6 +209,11 @@
             font-size: 3.5dvh;
         }
 
+        &[data-hover="0"]::after {
+            content: "+0";
+            color: var(--zero);
+        }
+
         &[data-hover="1"]::after {
             content: "+1";
             color: var(--one);
@@ -217,6 +222,71 @@
         &[data-hover="2"]::after {
             content: "+2";
             color: var(--two);
+        }
+
+        &[data-hover="3"]::after {
+            content: "+3";
+            color: var(--three);
+        }
+
+        &[data-hover="4"]::after {
+            content: "+4";
+            color: var(--four);
+        }
+
+        &[data-hover="5"]::after {
+            content: "+5";
+            color: var(--five);
+        }
+
+        &[data-hover="6"]::after {
+            content: "+6";
+            color: var(--six);
+        }
+
+        &[data-hover="7"]::after {
+            content: "+7";
+            color: var(--seven);
+        }
+
+        &[data-hover="8"]::after {
+            content: "+8";
+            color: var(--eight);
+        }
+
+        &[data-hover="9"]::after {
+            content: "+9";
+            color: var(--nine);
+        }
+
+        &[data-hover="-1"]::after {
+            content: "-1";
+            color: hsl(from var(--one) calc(h + 180) s l);
+        }
+
+        &[data-hover="-2"]::after {
+            content: "-2";
+            color: hsl(from var(--two) calc(h + 180) s l);
+        }
+
+        &[data-hover="-3"]::after {
+            content: "-3";
+            color: hsl(from var(--three) calc(h + 180) s l);
+        }
+
+        &[data-hover="-4"]::after {
+            content: "-4";
+            color: hsl(from var(--four) calc(h + 180) s l);
+        }
+
+        &[data-hover="-5"]::after {
+            content: "-5";
+            color: hsl(from var(--five) calc(h + 180) s l);
+        }
+
+        &[data-hover="-6"]::after {
+            content: "-6";
+            color: hsl(from var(--six) calc(h + 180) s l);
         }
     }
 
@@ -248,6 +318,18 @@
         &[value="6"] {
             color: var(--six);
         }
+
+        &[value="7"] {
+            color: var(--seven);
+        }
+
+        &[value="8"] {
+            color: var(--eight);
+        }
+
+        &[value="9"] {
+            color: var(--nine);
+        }
     }
 
     [name="period"] {
@@ -256,12 +338,16 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        width: 4dvh;
+        width: 12dvh;
 
         font-size: 4dvh;
 
         background: none;
         border: none;
+
+        &[value="Infinity"] {
+            font-size: 3dvh;
+        }
     }
 
     [name="value"] {

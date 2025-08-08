@@ -25,6 +25,13 @@ export class SceneGame extends Scene {
         const stage = stages[stageId]
         this.#cells = new Cells(stage)
         this.#cells.setBoard(stage)
+        console.log(
+            this.#cells
+                .getBoardVector()
+                .map((n) => -n)
+                .join("\n"),
+        )
+
         this.#countDenominator = this.#cells.minStep
 
         if (paint) {
@@ -149,7 +156,7 @@ export class SceneGame extends Scene {
 
     #setCount() {
         const d = Number.isFinite(this.#countDenominator) ? this.#countDenominator : "?"
-        this.#dom.count.textContent = `0/${d}`
+        this.#dom.count.textContent = `${this.#count}/${d}`
     }
 }
 
