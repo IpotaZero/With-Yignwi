@@ -134,5 +134,14 @@ export class SceneTitle extends Scene {
 
         volumeSE.value = "" + LocalStorage.getSEVolume()
         SE.setVolume(LocalStorage.getSEVolume())
+
+        container.querySelector<HTMLButtonElement>("#delete-data")!.onclick = () => {
+            const confirmed = window.confirm("ほんとに?")
+
+            if (confirmed) {
+                localStorage.clear()
+                Scenes.goto(() => new SceneTitle("#title"))
+            }
+        }
     }
 }
