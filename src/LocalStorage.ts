@@ -13,7 +13,7 @@ export class LocalStorage {
     }
 
     static #getDefaultData(): Data[] {
-        return Array.from({ length: 7 }, () =>
+        return Array.from({ length: 6 }, () =>
             Array.from({ length: 5 }, () => ({
                 cleared: false,
                 leastCleared: false,

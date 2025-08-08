@@ -25,7 +25,3 @@ document.addEventListener("contextmenu", (e) => {
 //     x?.map((n) => n.value),
 //     H.map((row) => row.map((n) => n.value)),
 // )
-
-for (let i = 0; i < 15; i++) {
-    LocalStorage.setData(i, { cleared: true, leastCleared: false })
-}
