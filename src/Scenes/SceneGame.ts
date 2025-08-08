@@ -6,6 +6,7 @@ import { Paint } from "../game/Paint.js"
 import { BGM } from "../utils/BGM.js"
 import { Scene } from "./Scene.js"
 import { Scenes } from "./Scenes.js"
+import { SceneNovel } from "./SceneNovel.js"
 
 export class SceneGame extends Scene {
     #cells: Cells
@@ -142,16 +143,32 @@ export class SceneGame extends Scene {
             const { SceneTitle } = await import("./SceneTitle.js")
             await Scenes.goto(() => new SceneTitle("#title #stage-select"))
         }
+
+        this.#dom.toStory.onclick = async () => {
+            setData()
+            await Scenes.goto(() => new SceneNovel(6))
+        }
     }
 
     #onCellClick() {
-        if (this.#cells.getBoardVector().every((c) => c === 0)) {
-            ;(this.#stageId % 5 === 4 ? this.#dom.backChapterSelect : this.#dom.next).classList.add("visible")
-            this.#cells.cells.classList.add("proof")
-        }
-
         this.#count++
         this.#setCount()
+
+        if (this.#cells.getBoardVector().every((c) => c === 0)) {
+            this.#cells.cells.classList.add("proof")
+
+            if (this.#stageId === 29) {
+                this.#dom.toStory.classList.add("visible")
+                return
+            }
+
+            if (this.#stageId % 5 === 4) {
+                this.#dom.backChapterSelect.classList.add("visible")
+                return
+            }
+
+            this.#dom.next.classList.add("visible")
+        }
     }
 
     #setCount() {
@@ -170,6 +187,7 @@ class SceneGameDom {
     reset: HTMLElement
     next: HTMLElement
     backChapterSelect: HTMLElement
+    toStory: HTMLElement
 
     middle: HTMLElement
 
@@ -184,8 +202,11 @@ class SceneGameDom {
         this.stageId = this.container.querySelector("#stage-id")!
         this.back = this.container.querySelector(".back")!
         this.reset = this.container.querySelector(".reset")!
+
         this.next = this.container.querySelector("#next .normal")!
         this.backChapterSelect = this.container.querySelector("#next .chapter-end")!
+        this.toStory = this.container.querySelector("#next .to-story")!
+
         this.middle = this.container.querySelector("#middle")!
         this.click = this.container.querySelector("#click")!
         this.paint = this.container.querySelector("#paint")!

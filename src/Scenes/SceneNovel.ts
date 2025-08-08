@@ -12,7 +12,12 @@ export class SceneNovel extends Scene {
         super()
 
         this.ready = this.#loadPage(index)
-        this.#playBgm()
+
+        if (index !== 6) {
+            this.#playBgm()
+        } else {
+            BGM.fadeOut(1000)
+        }
     }
 
     async #loadPage(index: number) {
@@ -26,7 +31,11 @@ export class SceneNovel extends Scene {
         container.querySelectorAll<HTMLElement>(".back").forEach((button) => {
             button.onclick = async () => {
                 const { SceneTitle } = await import("./SceneTitle.js")
-                await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + index))
+                if (index === 6) {
+                    await Scenes.goto(() => new SceneTitle("#title"))
+                } else {
+                    await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + index))
+                }
             }
         })
     }

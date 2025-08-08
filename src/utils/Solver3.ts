@@ -39,17 +39,8 @@ B.simplification()
 console.log("簡約化後:")
 console.log(B.toString())
 
-console.log("Ker:")
 const ker = A.getKernelBases()
 
-console.log(ker.map((row) => row.map((n) => n.toString()).join("\t")).join("\n"))
-
-console.log("xp:")
-console.log(
-    B.getParticularSolution()
-        ?.map((n) => n.toString())
-        .join("\t"),
-)
 
 const xp = [0, 1, 5, 0, 2, 2, 4, 0, 5, 2, 0, 0, 0, 0, 0, 0].map((n) => new Zn(n))
 
@@ -78,8 +69,6 @@ loop(periods, (x) => {
         min = sum
     }
 })
-
-console.log(min, minNorm)
 
 export const result = A.toString()
 // console.log(result)

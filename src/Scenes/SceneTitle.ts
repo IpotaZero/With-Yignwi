@@ -29,7 +29,10 @@ export class SceneTitle extends Scene {
     }
 
     async #playBgm() {
+        BGM.setVolume(LocalStorage.getBGMVolume())
+        console.log("f")
         await BGM.fadeOut(1000)
+        console.log("f2")
         await BGM.fetch("./assets/sounds/nontrapezodihedron.mp3")
         await BGM.play()
     }
@@ -120,7 +123,6 @@ export class SceneTitle extends Scene {
         }
 
         volumeBGM.value = "" + LocalStorage.getBGMVolume()
-        BGM.setVolume(LocalStorage.getBGMVolume())
 
         const volumeSE = container.querySelector<HTMLInputElement>(".volume-se")!
 

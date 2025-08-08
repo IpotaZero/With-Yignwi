@@ -4,7 +4,7 @@ export class BGM {
     static #audio: HTMLAudioElement | null = null
     static #source: MediaElementAudioSourceNode | null = null
 
-    static #volume = 0.5
+    static #volume = 1
 
     static path: string = ""
 
@@ -16,8 +16,6 @@ export class BGM {
         this.#context = new AudioContext()
         this.#gain = this.#context.createGain()
         this.#gain.connect(this.#context.destination)
-
-        this.setVolume(this.#volume)
     }
 
     static fetch(path: string) {
@@ -54,21 +52,25 @@ export class BGM {
         this.#audio?.pause()
     }
 
-    static fadeOut(ms: number) {
-        return new Promise<void>((resolve) => {
-            this.#gain.gain.cancelScheduledValues(0)
-            this.#gain.gain.exponentialRampToValueAtTime(0.001, this.#context.currentTime + ms / 1000)
-
-            setTimeout(() => {
-                resolve()
-            }, ms)
-        })
-    }
-
     static setVolume(volume: number) {
         this.#volume = volume
 
-        this.#gain.gain.cancelScheduledValues(0)
+        this.#gain.gain.cancelScheduledValues(this.#context.currentTime)
         this.#gain.gain.value = this.#volume
+    }
+
+    static async fadeOut(duration: number) {
+        if (!this.#audio || !this.#source || !this.#gain) return
+
+        const currentTime = this.#context.currentTime
+        const endTime = currentTime + duration / 1000
+
+        this.#gain.gain.cancelScheduledValues(currentTime)
+        this.#gain.gain.setValueAtTime(this.#gain.gain.value, currentTime)
+        this.#gain.gain.linearRampToValueAtTime(0, endTime)
+
+        await new Promise((resolve) => setTimeout(resolve, duration))
+
+        this.pause()
     }
 }
