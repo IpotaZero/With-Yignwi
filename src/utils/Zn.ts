@@ -15,6 +15,16 @@ export function Z<M extends number>(n: M) {
             }
         }
 
+        tryDivide(n: Zn<N>) {
+            for (let i = 0; i < this.period; i++) {
+                if (n.value === this.value * i) {
+                    return i
+                }
+            }
+
+            return null
+        }
+
         add(zn: Zn<N>) {
             return new Zn<N>(this.value + zn.value)
         }

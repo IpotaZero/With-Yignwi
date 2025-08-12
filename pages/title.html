@@ -1,12 +1,15 @@
 <div class="page" id="title">
-    <h1>風呂無し、<br />屋根無し、<br />地獄行き。</h1>
+    <div id="aspect">
+        <h1>風呂無し、<br />屋根無し、<br />地獄行き。</h1>
 
-    <div id="title-buttons">
-        <button data-link="#stage-select">始める</button>
-        <button data-link="#how-to-play">遊び方</button>
-        <button data-link="#option">設定</button>
-        <button id="fullscreen">全画面</button>
-        <button data-link="#credit">クレヂット</button>
+        <div id="title-buttons">
+            <button data-link="#stage-select">始める</button>
+            <button data-link="#how-to-play">遊び方</button>
+            <button data-link="#option">設定</button>
+            <button id="fullscreen">全画面</button>
+            <button data-link="#credit">クレヂット</button>
+            <button id="omake">オマケ</button>
+        </div>
     </div>
 </div>
 
@@ -141,6 +144,7 @@
         <button class="stage-button">第二幕</button>
         <button class="stage-button">第三幕</button>
         <button class="stage-button">第四幕</button>
+        <button id="last-story" class="story-button">終焉</button>
     </div>
 
     <button data-back="1" class="back">戻る</button>
@@ -169,11 +173,18 @@
         height: 100%;
         width: 100%;
 
-        margin: 0 8dvh;
+        margin: 0 7dvh;
+    }
+
+    #aspect {
+        display: flex;
+
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
     }
 
     h1 {
-        position: absolute;
         left: 0;
 
         margin: auto 0;
@@ -186,17 +197,17 @@
     }
 
     #title-buttons {
-        position: absolute;
-        top: calc(44% - 3vw);
-        right: 4dvh;
-
         display: flex;
         flex-direction: column;
+        justify-content: end;
+
+        padding-bottom: 4vw;
 
         gap: 1dvh;
 
         & button {
             font-size: 4vw;
+            white-space: nowrap;
         }
     }
 </style>
@@ -220,6 +231,10 @@
             & label {
                 width: 12vh;
             }
+        }
+
+        & #delete-data {
+            font-size: 6dvh;
         }
     }
 </style>

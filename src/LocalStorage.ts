@@ -1,4 +1,13 @@
 export class LocalStorage {
+    static allClear() {
+        for (let i = 0; i < 30; i++) {
+            this.setData(i, {
+                cleared: true,
+                leastCleared: false,
+            })
+        }
+    }
+
     static getData(): Data[] {
         const dataList = localStorage.getItem("data")
         return dataList ? JSON.parse(dataList) : this.#getDefaultData()

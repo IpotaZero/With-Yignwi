@@ -1,0 +1,33 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./SceneGame-cB0_mW9J.js","../run.js","./ScenePretitle-BItRUXQu.js"])))=>i.map(i=>d[i]);
+import{D as d,_ as p,S as i,B as c,A as _}from"../run.js";import{S as M,p as E}from"./ScenePretitle-BItRUXQu.js";class r{static allClear(){for(let e=0;e<30;e++)this.setData(e,{cleared:!0,leastCleared:!1})}static getData(){const e=localStorage.getItem("data");return e?JSON.parse(e):this.#e()}static setData(e,t){const a=this.getData();a[e].cleared||=t.cleared,a[e].leastCleared||=t.leastCleared,localStorage.setItem("data",JSON.stringify(a))}static#e(){return Array.from({length:6},()=>Array.from({length:5},()=>({cleared:!1,leastCleared:!1}))).flat()}static getBGMVolume(){return+(localStorage.getItem("bgm-volume")??"1")}static setBGMVolume(e){localStorage.setItem("bgm-volume",""+e)}static getSEVolume(){return+(localStorage.getItem("se-volume")??"1")}static setSEVolume(e){localStorage.setItem("se-volume",""+e)}}const S=new Image;S.src="assets/images/maple.png";function V(u){const e=document.createElement("style");e.innerHTML=`
+        .falling-particle {
+            position: fixed;
+            pointer-events: none;
+
+            width: 12dvh;
+            height: 12dvh;
+
+            mix-blend-mode: overlay;
+
+            opacity: 0;
+        }
+
+        @keyframes fall{
+            0% {
+                top: 0;
+                opacity: 0;
+                transform: rotate(0);
+            }
+
+            25% {
+                opacity: 0.15;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+                transform: rotate(360deg);
+            }
+        }
+    `,u.appendChild(e);const t=a=>{const n=Math.random();a.style.left=`${n*100}%`,a.style.scale=""+(Math.random()/2+.8),a.style.animation=`fall ${Math.random()*6+6}s linear infinite`,a.style.animationDelay=`${Math.random()*8}s`};for(let a=0;a<24;a++){const n=S.cloneNode();n.classList.add("falling-particle"),t(n),n.onanimationend=()=>{t(n)},u.appendChild(n)}}function b(u){u.addEventListener("click",e=>{const t=e.target.getBoundingClientRect(),a=e.clientX-t.left,n=e.clientY-t.top;for(let m=0;m<8;m++){const s=S.cloneNode();s.style.position="fixed",s.style.pointerEvents="none",s.style.left=`calc(${t.left+a}px - 4dvh)`,s.style.top=`calc(${t.top+n}px - 4dvh)`,s.style.width="8dvh",s.style.height="8dvh",s.style.scale=""+(Math.random()/2+.8),s.style.opacity=""+Math.random()*.5,s.style.transition="transform 1s ease-out, opacity 1s ease-out",s.style.zIndex="1000",document.body.appendChild(s);const o=Math.PI*2*m/8+Math.random(),l=60+Math.random()*20;requestAnimationFrame(()=>{s.style.transform=`translate(${Math.cos(o)*l/8}dvh, ${Math.sin(o)*l/8}dvh) scale(0.5) rotate(${o/Math.PI*180*(Math.random()-.5)}deg)`,s.style.opacity="0"}),setTimeout(()=>{s.remove()},1e3)}})}class w{#e;constructor(e){this.#e=new Audio(e)}play(){this.#e.currentTime=0,this.#e.play()}setVolume(e){this.#e.volume=e}}class g{static cursor=new w("assets/sounds/カーソル移動4.mp3");static ok=new w("assets/sounds/タイプライターで文字を打つ1.mp3");static setVolume(e){Object.values(this).forEach(t=>{t.setVolume(e)})}}class f extends M{ready;constructor(e,t){super(),this.ready=this.#e(e,t),[6,7].includes(e)?this.#a():this.#t()}async#e(e,t){const a=d.container,n=await fetch("pages/novel.html",{cache:"no-store"}).then(m=>m.text());E(a,"#chapter"+e,n),a.querySelectorAll(".page").forEach(b),a.querySelectorAll(".back").forEach(m=>{m.onclick=async()=>{const{SceneTitle:s}=await p(async()=>{const{SceneTitle:o}=await Promise.resolve().then(()=>B);return{SceneTitle:o}},void 0,import.meta.url);if(e===6){t==="game"?await i.goto(()=>new s("#title")):await i.goto(()=>new s("#title #stage-select #chapter5"));return}if(e===7){await i.goto(()=>new s("#title"));return}await i.goto(()=>new s("#title #stage-select #chapter"+e))}})}async#t(){await c.fadeOut(1e3),await c.fetch("assets/sounds/一切れの諧謔.mp3"),await c.play()}async#a(){await c.fadeOut(1e3),await _.sleep(1e3),await c.fetch("assets/sounds/ちっぽけな煌めき.mp3"),await c.play()}}const L=Object.freeze(Object.defineProperty({__proto__:null,SceneNovel:f},Symbol.toStringTag,{value:"Module"}));class v extends M{ready;constructor(e){super(),this.#t(),this.ready=this.#e(e)}async#e(e){const t=await fetch("pages/title.html",{cache:"no-store"}).then(a=>a.text());E(d.container,e,t),this.#a(),this.#s(),this.#l(),this.#o()}async#t(){c.setVolume(r.getBGMVolume()),await c.fadeOut(1e3),await c.fetch("assets/sounds/nontrapezodihedron.mp3"),await c.play()}#a(){const e=d.container;e.querySelectorAll(".page").forEach(b);const t=e.querySelectorAll(".chapter-button");t.forEach((o,l)=>{l!==0&&o.classList.add("hidden")});const a=e.querySelectorAll(".stage-button");a.forEach((o,l)=>{o.onclick=async()=>{const{SceneGame:h}=await p(async()=>{const{SceneGame:y}=await import("./SceneGame-cB0_mW9J.js");return{SceneGame:y}},__vite__mapDeps([0,1,2]),import.meta.url);await i.goto(()=>new h(l))}}),e.querySelectorAll(".story-button").forEach((o,l)=>{o.onclick=async()=>{const{SceneNovel:h}=await p(async()=>{const{SceneNovel:y}=await Promise.resolve().then(()=>L);return{SceneNovel:y}},void 0,import.meta.url);await i.goto(()=>new h(l))}}),e.querySelectorAll("button").forEach(o=>{o.onmouseover=()=>{g.cursor.play()}});const s=r.getData();s.forEach((o,l)=>{if(o.leastCleared){a[l].innerHTML+="<br>★";return}o.cleared&&(a[l].innerHTML+="<br>☆")});for(const o of t.keys()){if(s.slice(o*5,o*5+5).every(l=>l.leastCleared)){t[o].innerHTML+="<br>★",t[o+1]?.classList.remove("hidden");continue}s.slice(o*5,o*5+5).every(l=>l.cleared)&&(t[o].innerHTML+="<br>☆",t[o+1]?.classList.remove("hidden"))}e.querySelector("#fullscreen").onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.body.requestFullscreen()},V(e.querySelector("#title"))}#o(){const e=d.container,t=e.querySelector(".volume-bgm");t.oninput=()=>{c.setVolume(+t.value),r.setBGMVolume(+t.value)},t.value=""+r.getBGMVolume();const a=e.querySelector(".volume-se");a.oninput=()=>{g.setVolume(+a.value),r.setSEVolume(+a.value)},a.value=""+r.getSEVolume(),g.setVolume(r.getSEVolume())}#s(){d.container.querySelector("#delete-data").onclick=()=>{window.confirm("ほんとに?")&&(localStorage.clear(),i.goto(()=>new v("#title")))}}#l(){const e=d.container.querySelector("#last-story");e.classList.toggle("hidden",!r.getData().every(a=>a.cleared)),e.onclick=()=>{i.goto(()=>new f(6))};const t=d.container.querySelector("#omake");t.classList.toggle("hidden",!r.getData().every(a=>a.leastCleared)),t.onclick=()=>{i.goto(()=>new f(7))}}}const B=Object.freeze(Object.defineProperty({__proto__:null,SceneTitle:v},Symbol.toStringTag,{value:"Module"}));export{r as L,f as S,B as a};
+//# sourceMappingURL=SceneTitle-Chu-hJs_.js.map

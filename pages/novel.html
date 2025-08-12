@@ -118,7 +118,27 @@
 <div class="page chapter" id="chapter4">
     <div class="novel">
         <p>十月三十一日（月）雨</p>
-        <p>今日の授業は上の空だった。教師の声も、周りのざわめきも、何も耳に入ってこない。</p>
+        <p>
+            雨音が硝子窓を叩く音だけが響く午後だった。 授業は英語会話。ゆぃぐぬぃ嬢の流暢な発音が教室内に澄み渡る。
+            その声を聞いているだけで、妙な感覚が込み上げてきた。 彼女の存在自体が眩しいのだ。
+        </p>
+        <p>黒い詰襟の中で息苦しくなるような衝動が膨らんでゆく。それが何なのかは分からないままに。</p>
+        <p>相変わらず授業は頭に入ってこない。いづれ</p>
+        <p>今日も紙片はあった。昨日と同じ様な内容。少し安心した自分がいた。</p>
+
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+
+    <button class="back">戻る</button>
+</div>
+
+<div class="page chapter" id="chapter5">
+    <div class="novel">
+        <p>十一月一日（火）雨</p>
+        <p>今日の授業も上の空だった。教師の声も、周りのざわめきも、何も耳に入ってこない。</p>
         <p>
             脳裏に焼き付いているのは、昨夜解き明かした方程式だけだ。 あれが意味するのは一体何なのか？
             私は机の上で手帳を広げ、そこに残された全ての記号と数式を眺めたが、新しい発見は何もなかった。
@@ -145,24 +165,6 @@
     <button class="back">戻る</button>
 </div>
 
-<div class="page chapter" id="chapter5">
-    <div class="novel">
-        <p>十一月一日（火）雨</p>
-        <p>
-            雨音が硝子窓を叩く音だけが響く午後だった。 授業は英語会話。ゆぃぐぬぃ嬢の流暢な発音が教室内に澄み渡る。
-            その声を聞いているだけで、妙な感覚が込み上げてきた。 なぜだか最近、彼女の存在自体が眩しいのだ。
-        </p>
-        <p>黒い詰襟の中で息苦しくなるような衝動が膨らんでゆく。それが何なのかは分からないままに。</p>
-
-        <br />
-        <br />
-        <br />
-        <br />
-    </div>
-
-    <button class="back">戻る</button>
-</div>
-
 <div class="page chapter" id="chapter6">
     <div class="novel">
         <p>十一月二日（水）晴天</p>
@@ -178,11 +180,33 @@
 
 <div class="page chapter" id="chapter7">
     <div class="novel">
-        <p>現出</p>
         <p>
-            その爆発は太陽系ぜんぶをのみこんでしまうくらい大きくて、 <br />
+            純粋な <ruby>容<rt>かたち</rt> </ruby>の現出。
+        </p>
+        <p>
+            数京年の進化の過程で削り取られた捕食者が、圧倒的現実が、<br />
+            曖昧だと知った世界を割いて現れる。
+        </p>
+        <p>
+            その爆発は太陽系ぜんぶをのみ込んでしまうくらい大きくて、 <br />
             きっと、私たちは白い光に包まれて消えるのでしょう。
         </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p>
+            「風呂無し、屋根無し、地獄行き。」完全クリアおめでとう！<br />
+            この画面をスクショして友達に自慢しよう！
+        </p>
+        <br />
+        <br />
     </div>
 
     <button class="back">戻る</button>
@@ -201,8 +225,30 @@
         border-bottom: #111 1px solid;
     }
 
-    #chapter7 .novel p {
-        font-size: 4vh;
+    .chapter {
+        ruby {
+            font-size: 1em;
+        }
+
+        rt {
+            font-size: 0.5em;
+        }
+    }
+
+    #chapter7 .novel {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32dvh 12dvh;
+
+        overflow-y: auto;
+
+        p {
+            text-align: center;
+            font-size: 4dvh;
+            margin: 4dvh 0;
+        }
     }
 
     .chapter:not(#chapter7) {

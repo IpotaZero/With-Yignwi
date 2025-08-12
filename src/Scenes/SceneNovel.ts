@@ -1,5 +1,6 @@
 import { Dom } from "../Dom.js"
 import { setupParticle } from "../Particles.js"
+import { Awaits } from "../utils/Awaits.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { Scene } from "./Scene.js"
@@ -8,19 +9,19 @@ import { Scenes } from "./Scenes.js"
 export class SceneNovel extends Scene {
     ready: Promise<void>
 
-    constructor(index: number) {
+    constructor(index: number, from?: string) {
         super()
 
-        this.ready = this.#loadPage(index)
+        this.ready = this.#loadPage(index, from)
 
-        if (index !== 6) {
+        if (![6, 7].includes(index)) {
             this.#playBgm()
         } else {
-            BGM.fadeOut(1000)
+            this.#lastBgm()
         }
     }
 
-    async #loadPage(index: number) {
+    async #loadPage(index: number, from?: string) {
         const container = Dom.container
 
         const html = await fetch("pages/novel.html", { cache: "no-store" }).then((res) => res.text())
@@ -31,18 +32,36 @@ export class SceneNovel extends Scene {
         container.querySelectorAll<HTMLElement>(".back").forEach((button) => {
             button.onclick = async () => {
                 const { SceneTitle } = await import("./SceneTitle.js")
+
                 if (index === 6) {
-                    await Scenes.goto(() => new SceneTitle("#title"))
-                } else {
-                    await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + index))
+                    if (from === "game") {
+                        await Scenes.goto(() => new SceneTitle("#title"))
+                    } else {
+                        await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter5"))
+                    }
+                    return
                 }
+
+                if (index === 7) {
+                    await Scenes.goto(() => new SceneTitle("#title"))
+                    return
+                }
+
+                await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + index))
             }
         })
     }
 
     async #playBgm() {
         await BGM.fadeOut(1000)
-        await BGM.fetch("./assets/sounds/一切れの諧謔.mp3")
+        await BGM.fetch("assets/sounds/一切れの諧謔.mp3")
+        await BGM.play()
+    }
+
+    async #lastBgm() {
+        await BGM.fadeOut(1000)
+        await Awaits.sleep(1000)
+        await BGM.fetch("assets/sounds/ちっぽけな煌めき.mp3")
         await BGM.play()
     }
 }

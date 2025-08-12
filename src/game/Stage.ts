@@ -101,7 +101,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [8, 9, 1, 10, 8, 1],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 5,
+        minStep: 6,
     },
 
     {
@@ -141,7 +141,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 11, 5, 15, 7, 13],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 10,
+        minStep: 12,
     },
 
     {

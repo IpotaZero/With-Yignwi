@@ -11,6 +11,8 @@ export class Mat {
     readonly period: number
     readonly Zn: ReturnType<typeof Z>
 
+    #currentRow = 0
+
     constructor(period: number, public m: InstanceType<ReturnType<typeof Z>>[][]) {
         this.period = period
         this.Zn = Z(period)
@@ -43,6 +45,8 @@ export class Mat {
 
     getKernelBases() {
         const p = this.#getPivots()
+
+        console.log(p)
 
         const bases: Fraction[][] = []
 
@@ -106,13 +110,19 @@ export class Mat {
             this.m.toReversed().forEach((row) => {
                 if (row[col].value === 0) return
 
-                const pivotCol = row.findIndex((n) => n.value !== 0)
+                let pivotCol = row.findIndex((n) => n.value === 1)
+
+                if (pivotCol === -1) {
+                    pivotCol = row.findIndex((n) => n.value !== 0)
+                }
+
+                // console.log(pivotCol)
 
                 const m = row
-                    .slice(pivotCol + 1)
+                    .filter((_, i) => i !== pivotCol)
                     .map((n) => n.mul(new this.Zn(-1)))
                     .map((n) => new Fraction(n.value))
-                const n = base.slice(pivotCol + 1)
+                const n = base.filter((_, i) => i !== pivotCol)
 
                 const dot = Mat.dot(m, n)
 
@@ -144,23 +154,36 @@ export class Mat {
 
     #getPivots(): { pivots: [number, number][]; arbitraries: number[]; irreversible: [number, number][] } {
         const pivots: [number, number][] = []
-        const irreversible = []
+        const irreversible: [number, number][] = []
 
         for (let row = 0; row < this.rows; row++) {
-            const p = this.m[row].findIndex((n) => n.value !== 0)
+            const pivotCol = this.m[row].findIndex((n) => n.value === 1)
 
-            if (p === -1) break
+            if (pivotCol !== -1) {
+                pivots.push([row, pivotCol])
+            }
+        }
 
-            if (!this.m[row][p].inv()) {
-                irreversible.push([row, p] as [number, number])
+        for (let row = 0; row < this.rows; row++) {
+            if (pivots.some(([r, _]) => r === row)) {
+                continue
             }
 
-            pivots.push([row, p] as [number, number])
+            // pivotではなくて、
+            const irreversibleCol = this.m[row].findIndex(
+                (n, col) => pivots.every(([_, c]) => c !== col) && n.value !== 0,
+            )
+
+            if (irreversibleCol === -1) break
+
+            if (!this.m[row][irreversibleCol].inv()) {
+                irreversible.push([row, irreversibleCol] as [number, number])
+            }
         }
 
         const arbitraries = Array(this.cols)
             .keys()
-            .filter((n) => pivots.every(([row, col]) => n !== col))
+            .filter((n) => pivots.every(([row, col]) => n !== col) && irreversible.every(([row, col]) => n !== col))
             .toArray()
 
         return {
@@ -171,6 +194,8 @@ export class Mat {
     }
 
     simplification() {
+        this.#currentRow = 0
+
         for (let col = 0; col < this.cols; col++) {
             // console.log(`\u001b[31m${col}列目開始\u001b[0m`)
 
@@ -178,6 +203,36 @@ export class Mat {
             this.methodB(col)
             this.methodC(col)
         }
+
+        this.#tidy()
+
+        const p = this.#getPivots()
+
+        // 可逆pivotこそ真のpivot
+        p.pivots.forEach(([row, col]) => {
+            const num = this.m[row][col]
+
+            for (let r = 0; r < this.rows; r++) {
+                if (r === row) continue
+
+                const target = this.m[r][col]
+
+                if (target.value === 0) continue
+
+                const scaler = target.mul(new this.Zn(-1))
+
+                const rowVec = this.m[row].map((n) => n.mul(scaler))
+
+                const 他のpivot列に影響を与えない = p.pivots.every(([_, c]) => {
+                    if (col === c) return true
+                    return rowVec[c].value === 0
+                })
+
+                if (他のpivot列に影響を与えない) {
+                    this.R(row, r, scaler)
+                }
+            }
+        })
 
         this.#tidy()
     }
@@ -210,9 +265,41 @@ export class Mat {
 
                 if (num.inv()) {
                     this.Q(row, num.inv()!)
+                } else if (num.value > this.period / 2) {
+                    this.m[row][c] = this.m[row][c].mul(new this.Zn(-1))
                 }
             }
         }
+
+        for (let row = 0; row < this.rows; row++) {
+            const pivotCol = this.m[row].findIndex((n) => n.value !== 0)
+
+            if (pivotCol === -1) continue
+
+            const num = this.m[row][pivotCol]
+
+            for (let r = 0; r < row; r++) {
+                const s = this.#getMinScaler(r, pivotCol, num)
+
+                if (s) {
+                    this.safeR(row, r, new this.Zn(s), pivotCol)
+                }
+            }
+        }
+    }
+
+    #getMinScaler(r: number, pivotCol: number, num: Zn) {
+        const t = this.m[r][pivotCol]
+
+        for (let target = 0; target < num.value; target++) {
+            const c = num.tryDivide(new this.Zn(target).sub(t))
+
+            if (c) {
+                return -c
+            }
+        }
+
+        return null
     }
 
     P(i: number, j: number) {
@@ -272,6 +359,10 @@ export class Mat {
         }
     }
 
+    testR(i: number, j: number, scaler: number) {
+        return this.R(i, j, new this.Zn(scaler))
+    }
+
     // 可逆元から1を作ってそれ以外の行を0にする
     methodA(col: number) {
         // 可逆元を探す
@@ -280,7 +371,7 @@ export class Mat {
         // 失敗
         if (pivotRow === null) {
             // console.log(`${col}列: 可逆元なし`)
-            return
+            return null
         }
 
         // console.log(`${col}列: 可逆元あり ${pivotRow}行目`)
@@ -291,9 +382,10 @@ export class Mat {
         const num = this.m[pivotRow][col]
         this.Q(pivotRow, num.inv()!)
 
-        this.deleteOtherRow(col, pivotRow)
+        return this.deleteOtherRow(col, pivotRow)
     }
 
+    // 可逆元を見つける
     findA(col: number) {
         const p = this.m.findIndex((row) => row[col].inv() !== null)
 
@@ -302,8 +394,9 @@ export class Mat {
         return p
     }
 
-    // いくつかの行を足して可逆元が作れないか
+    // 2つの行を足して可逆元が作れないか
     methodB(col: number) {
+        // 2つの行を足して可逆元になるものを探す
         const p = this.findB(col)
 
         // 失敗
@@ -318,7 +411,7 @@ export class Mat {
             const [i, j, k] = h
             if (!this.safeR(i, j, new this.Zn(k), col)) continue
 
-            this.methodA(col)
+            if (this.methodA(col)) break
         }
     }
 
@@ -392,6 +485,8 @@ export class Mat {
 
     // 他の行を消す
     deleteOtherRow(col: number, pivotRow: number) {
+        let success = true
+
         for (let r = 0; r < this.rows; r++) {
             if (r === pivotRow) continue
 
@@ -401,11 +496,14 @@ export class Mat {
 
             // scaler倍して引く
             const scaler = this.m[r][col].mul(new this.Zn(-1))
-            this.safeR(pivotRow, r, scaler, col)
+            const b = this.safeR(pivotRow, r, scaler, col)
+            success &&= b
         }
 
         // 入れ替え
         // this.P(pivotRow, col)
+
+        return success
     }
 
     toNumber() {

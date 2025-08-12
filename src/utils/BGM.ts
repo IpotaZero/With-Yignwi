@@ -18,11 +18,18 @@ export class BGM {
         this.#gain.connect(this.#context.destination)
     }
 
+    static async ffp(path: string) {
+        this.path = path
+        await this.fadeOut(1000)
+        await this.fetch(path)
+        await this.play()
+    }
+
     static fetch(path: string) {
+        this.path = path
+
         this.#audio?.pause()
         this.#source?.disconnect()
-
-        this.path = path
 
         return new Promise<void>((resolve) => {
             this.#audio = new Audio(path)
@@ -33,11 +40,9 @@ export class BGM {
 
             if (this.#audio.readyState >= 2) {
                 resolve()
-                this.setVolume(this.#volume)
             } else {
                 this.#audio.oncanplay = () => {
                     resolve()
-                    this.setVolume(this.#volume)
                 }
             }
         })
@@ -72,5 +77,6 @@ export class BGM {
         await new Promise((resolve) => setTimeout(resolve, duration))
 
         this.pause()
+        this.setVolume(this.#volume)
     }
 }

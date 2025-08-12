@@ -7,6 +7,7 @@ import { BGM } from "../utils/BGM.js"
 import { Scene } from "./Scene.js"
 import { Scenes } from "./Scenes.js"
 import { SceneNovel } from "./SceneNovel.js"
+import { Awaits } from "../utils/Awaits.js"
 
 export class SceneGame extends Scene {
     #cells: Cells
@@ -41,16 +42,18 @@ export class SceneGame extends Scene {
         }
 
         this.ready = this.#setup()
-
-        this.#playBgm()
     }
 
     async #playBgm() {
-        if (BGM.path === "./assets/sounds/野晒しの地獄.mp3") return
+        await Awaits.sleep(1000)
 
-        await BGM.fadeOut(1000)
-        await BGM.fetch("./assets/sounds/野晒しの地獄.mp3")
-        await BGM.play()
+        console.log({ ...BGM })
+
+        if (BGM.path !== "assets/sounds/野晒しの地獄.mp3") {
+            await BGM.fadeOut(1000)
+            await BGM.fetch("assets/sounds/野晒しの地獄.mp3")
+            await BGM.play()
+        }
     }
 
     async #setup() {
@@ -58,6 +61,8 @@ export class SceneGame extends Scene {
         this.#initUI()
         this.#setupPaintButtons()
         this.#setupEventHandlers()
+
+        this.#playBgm()
     }
 
     async #loadPage() {
@@ -73,11 +78,12 @@ export class SceneGame extends Scene {
         this.#count = 0
         this.#setCount()
 
-        const c = ["零", "一", "二", "三", "四", "五", "六"]
+        const c = ["零", "一", "二", "三", "四"]
 
-        this.#dom.stageId.textContent = `
-            第${c[Math.floor(this.#stageId / 5)]}章 ${c[this.#stageId % 5]}幕
-        `
+        const chapter = this.#stageId >= 25 ? "最終章" : `第${c[Math.floor(this.#stageId / 5)]}章`
+
+        this.#dom.stageId.textContent = `${chapter} ${c[this.#stageId % 5]}幕`
+
         const data = LocalStorage.getData()[this.#stageId]
         if (data.leastCleared) {
             this.#dom.stageId.textContent += "★"
@@ -146,7 +152,7 @@ export class SceneGame extends Scene {
 
         this.#dom.toStory.onclick = async () => {
             setData()
-            await Scenes.goto(() => new SceneNovel(6))
+            await Scenes.goto(() => new SceneNovel(6, "game"))
         }
     }
 

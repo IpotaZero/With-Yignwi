@@ -5,6 +5,7 @@ import { SE } from "../SE.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { Scene } from "./Scene.js"
+import { SceneNovel } from "./SceneNovel.js"
 import { Scenes } from "./Scenes.js"
 
 export class SceneTitle extends Scene {
@@ -13,8 +14,8 @@ export class SceneTitle extends Scene {
     constructor(pageHistory: string) {
         super()
 
-        this.ready = this.#loadPage(pageHistory)
         this.#playBgm()
+        this.ready = this.#loadPage(pageHistory)
     }
 
     async #loadPage(pageHistory: string) {
@@ -25,15 +26,16 @@ export class SceneTitle extends Scene {
         // fall(container)
 
         this.#setupButtons()
+        this.#setupDeleteButton()
+        this.#setupLastStoryButton()
         this.#setupVolumeSetting()
     }
 
     async #playBgm() {
         BGM.setVolume(LocalStorage.getBGMVolume())
-        console.log("f")
+
         await BGM.fadeOut(1000)
-        console.log("f2")
-        await BGM.fetch("./assets/sounds/nontrapezodihedron.mp3")
+        await BGM.fetch("assets/sounds/nontrapezodihedron.mp3")
         await BGM.play()
     }
 
@@ -134,14 +136,34 @@ export class SceneTitle extends Scene {
 
         volumeSE.value = "" + LocalStorage.getSEVolume()
         SE.setVolume(LocalStorage.getSEVolume())
+    }
 
-        container.querySelector<HTMLButtonElement>("#delete-data")!.onclick = () => {
+    #setupDeleteButton() {
+        Dom.container.querySelector<HTMLButtonElement>("#delete-data")!.onclick = () => {
             const confirmed = window.confirm("ほんとに?")
 
             if (confirmed) {
                 localStorage.clear()
                 Scenes.goto(() => new SceneTitle("#title"))
             }
+        }
+    }
+
+    #setupLastStoryButton() {
+        const b = Dom.container.querySelector<HTMLButtonElement>("#last-story")!
+
+        b.classList.toggle("hidden", !LocalStorage.getData().every((d) => d.cleared))
+
+        b.onclick = () => {
+            Scenes.goto(() => new SceneNovel(6))
+        }
+
+        const c = Dom.container.querySelector<HTMLButtonElement>("#omake")!
+
+        c.classList.toggle("hidden", !LocalStorage.getData().every((d) => d.leastCleared))
+
+        c.onclick = () => {
+            Scenes.goto(() => new SceneNovel(7))
         }
     }
 }

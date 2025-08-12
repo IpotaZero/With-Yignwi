@@ -20,6 +20,8 @@ export class Scenes {
 
         await Awaits.fadeOut(container)
 
+        await this.#currentScene.end()
+
         let done = false
         let showed = false
 
