@@ -181,7 +181,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [4, 6, 9, 2, 13, 6, 8],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 16,
+        minStep: 10,
     },
     {
         rows: 4,
@@ -194,7 +194,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [4, 6, 9, 2, 13, 6, 8],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 10,
+        minStep: 6,
     },
     {
         rows: 4,
@@ -220,7 +220,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [3, 1, 4, 15, 9, 2, 6, 5],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 18,
+        minStep: 13,
     },
 
     {
@@ -247,20 +247,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 3, 4, 7, 9, 12, 3],
         weight: () => createCrossWeightMatrix(4, 4),
-        minStep: 11,
-    },
-    {
-        rows: 4,
-        cols: 4,
-        periods: [
-            [1, 3, 3, 1],
-            [3, 2, 2, 3],
-            [3, 2, 2, 3],
-            [1, 3, 3, 1],
-        ].flat(),
-        clicks: [0, 3, 4, 7, 9, 12, 3],
-        weight: () => createCrossWeightMatrix(4, 4, [1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2]),
-        minStep: 11,
+        minStep: Infinity,
     },
     {
         rows: 4,
@@ -280,13 +267,26 @@ export const stages: Stage[] = [
         cols: 4,
         periods: [
             [1, 3, 3, 1],
+            [3, 2, 2, 3],
+            [3, 2, 2, 3],
+            [1, 3, 3, 1],
+        ].flat(),
+        clicks: [0, 3, 4, 7, 9, 12, 3],
+        weight: () => createCrossWeightMatrix(4, 4, [1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2]),
+        minStep: Infinity,
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [1, 3, 3, 1],
             [3, 4, 4, 3],
             [3, 4, 4, 3],
             [1, 3, 3, 1],
         ].flat(),
         clicks: [0, 3, 4, 6, 7, 8, 9, 10, 11, 12, 3],
         weight: () => createXWeightMatrix(4, 4, [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
-        minStep: Infinity,
+        minStep: 3,
     },
 
     {
