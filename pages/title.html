@@ -13,6 +13,8 @@
     </div>
 </div>
 
+<img id="flower" src="assets/images/flower.png" alt="" />
+
 <div class="page" id="how-to-play">
     <button data-back="1" class="back">戻る</button>
     <div id="explanation">
@@ -20,6 +22,8 @@
         <p>適当に押すも良し、ガチ攻略するも良し。</p>
         <p>ホバーすると重み付けが見られます。</p>
     </div>
+
+    <img id="htp-img" src="assets/images/how-to-play.png" alt="あそびかた" />
 </div>
 
 <div class="page" id="option">
@@ -169,11 +173,33 @@
 </style>
 
 <style>
+    #flower {
+        position: fixed;
+        height: 40vw;
+
+        top: 0;
+        right: 0;
+
+        image-rendering: pixelated;
+
+        pointer-events: none;
+
+        opacity: 0.1;
+    }
+
+    #title:not(.hidden) ~ #flower {
+        display: none;
+    }
+</style>
+
+<style>
     #title {
         height: 100%;
         width: 100%;
 
         margin: 0 7dvh;
+
+        position: relative;
     }
 
     #aspect {
@@ -216,6 +242,14 @@
     #how-to-play,
     #credit {
         padding: 6dvh;
+    }
+
+    #how-to-play p {
+        font-size: 4dvh;
+    }
+
+    #htp-img {
+        height: 70%;
     }
 </style>
 
@@ -300,5 +334,9 @@
         font-size: 6dvh;
 
         margin: auto;
+
+        /* background-image: url("assets/images/frame.png");
+        background-size: cover;
+        image-rendering: pixelated; */
     }
 </style>

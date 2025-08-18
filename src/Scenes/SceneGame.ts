@@ -8,6 +8,7 @@ import { Scene } from "./Scene.js"
 import { Scenes } from "./Scenes.js"
 import { SceneNovel } from "./SceneNovel.js"
 import { Awaits } from "../utils/Awaits.js"
+import { SE } from "../SE.js"
 
 export class SceneGame extends Scene {
     #cells: Cells
@@ -27,12 +28,12 @@ export class SceneGame extends Scene {
         const stage = stages[stageId]
         this.#cells = new Cells(stage)
         this.#cells.setBoard(stage)
-        console.log(
-            this.#cells
-                .getBoardVector()
-                .map((n) => -n)
-                .join("\n"),
-        )
+        // console.log(
+        //     this.#cells
+        //         .getBoardVector()
+        //         .map((n) => -n)
+        //         .join("\n"),
+        // )
 
         this.#countDenominator = this.#cells.minStep
 
@@ -47,7 +48,7 @@ export class SceneGame extends Scene {
     async #playBgm() {
         await Awaits.sleep(1000)
 
-        console.log({ ...BGM })
+        // console.log({ ...BGM })
 
         if (BGM.path !== "assets/sounds/野晒しの地獄.mp3") {
             await BGM.fadeOut(1000)
@@ -161,6 +162,8 @@ export class SceneGame extends Scene {
         this.#setCount()
 
         if (this.#cells.getBoardVector().every((c) => c === 0)) {
+            SE.ok.play()
+
             this.#cells.cells.classList.add("proof")
 
             if (this.#stageId === 29) {

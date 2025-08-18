@@ -14,10 +14,16 @@ export class SceneNovel extends Scene {
 
         this.ready = this.#loadPage(index, from)
 
-        if (![6, 7].includes(index)) {
-            this.#playBgm()
-        } else {
+        this.#playBgm(index)
+    }
+
+    #playBgm(index: number) {
+        if (index === 6) {
             this.#lastBgm()
+        } else if (index === 7) {
+            this.#omakeBgm()
+        } else {
+            this.#normalBgm()
         }
     }
 
@@ -52,7 +58,7 @@ export class SceneNovel extends Scene {
         })
     }
 
-    async #playBgm() {
+    async #normalBgm() {
         await BGM.fadeOut(1000)
         await BGM.fetch("assets/sounds/一切れの諧謔.mp3")
         await BGM.play()
@@ -62,6 +68,13 @@ export class SceneNovel extends Scene {
         await BGM.fadeOut(1000)
         await Awaits.sleep(1000)
         await BGM.fetch("assets/sounds/ちっぽけな煌めき.mp3")
+        await BGM.play()
+    }
+
+    async #omakeBgm() {
+        await BGM.fadeOut(1000)
+        await Awaits.sleep(1000)
+        await BGM.fetch("assets/sounds/頽れた星.mp3")
         await BGM.play()
     }
 }

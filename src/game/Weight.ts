@@ -85,7 +85,7 @@ export function createCrossWeightMatrix(rows: number, cols: number, periods?: nu
         }
     }
 
-    return A
+    return transpose(A)
 }
 
 export function createXWeightMatrix(rows: number, cols: number, periods?: number[]) {
@@ -113,7 +113,7 @@ export function createXWeightMatrix(rows: number, cols: number, periods?: number
         }
     }
 
-    return A
+    return transpose(A)
 }
 
 export function createUnitMatrix(rows: number, cols: number): number[][] {

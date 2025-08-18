@@ -5,6 +5,12 @@ import {
     createXWeightMatrix,
 } from "./Weight.js"
 
+console.log(
+    createCrossWeightMatrix(4, 4, [2, 3, 3, 2, 3, 4, 4, 3, 3, 4, 4, 3, 2, 3, 3, 2])
+        .map((row) => row.join("\t"))
+        .join("\n"),
+)
+
 export type Stage = {
     rows: number
     cols: number
@@ -15,6 +21,18 @@ export type Stage = {
 }
 
 export const stages: Stage[] = [
+    // {
+    //     rows: 3,
+    //     cols: 5,
+    //     periods: [
+    //         [2, 2, 2, 2, 2],
+    //         [3, 3, 3, 3, 3],
+    //         [2, 2, 2, 2, 2],
+    //     ].flat(),
+    //     clicks: [1, 3, 5, 7, 12],
+    //     weight: () => createSquareWeightMatrix(3, 5),
+    //     minStep: Infinity,
+    // },
     {
         rows: 4,
         cols: 4,
@@ -163,7 +181,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [4, 6, 9, 2, 13, 6, 8],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 16,
     },
     {
         rows: 4,
@@ -176,7 +194,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [4, 6, 9, 2, 13, 6, 8],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 10,
     },
     {
         rows: 4,
@@ -189,7 +207,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [13, 3, 11, 6, 0, 3, 9],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 16,
     },
     {
         rows: 4,
@@ -202,7 +220,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [3, 1, 4, 15, 9, 2, 6, 5],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 18,
     },
 
     {
@@ -229,7 +247,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 3, 4, 7, 9, 12, 3],
         weight: () => createCrossWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 11,
     },
     {
         rows: 4,
@@ -242,18 +260,18 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 3, 4, 7, 9, 12, 3],
         weight: () => createCrossWeightMatrix(4, 4, [1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2]),
-        minStep: Infinity,
+        minStep: 11,
     },
     {
         rows: 4,
         cols: 4,
         periods: [
-            [1, 3, 3, 1],
+            [2, 3, 3, 2],
             [3, 4, 4, 3],
             [3, 4, 4, 3],
-            [1, 3, 3, 1],
+            [2, 3, 3, 2],
         ].flat(),
-        clicks: [0, 3, 4, 7, 9, 12, 3],
+        clicks: [0, 1, 3, 5, 7, 9, 5, 3, 11],
         weight: () => createCrossWeightMatrix(4, 4, [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
         minStep: Infinity,
     },
@@ -266,7 +284,7 @@ export const stages: Stage[] = [
             [3, 4, 4, 3],
             [1, 3, 3, 1],
         ].flat(),
-        clicks: [0, 3, 4, 7, 9, 12, 3],
+        clicks: [0, 3, 4, 6, 7, 8, 9, 10, 11, 12, 3],
         weight: () => createXWeightMatrix(4, 4, [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
         minStep: Infinity,
     },
@@ -370,10 +388,10 @@ export const stages: Stage[] = [
         rows: 4,
         cols: 4,
         periods: [
-            [3, 5, 4, Infinity],
-            [5, Infinity, 4, 4],
-            [4, 4, Infinity, 5],
-            [Infinity, 4, 5, 3],
+            [Infinity, 3, 4, Infinity],
+            [3, 5, 4, 4],
+            [4, 4, 5, 3],
+            [1, 4, 3, Infinity],
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
@@ -383,10 +401,10 @@ export const stages: Stage[] = [
         rows: 4,
         cols: 4,
         periods: [
-            [Infinity, 3, 4, Infinity],
-            [3, 5, 4, 4],
-            [4, 4, 5, 3],
-            [1, 4, 3, Infinity],
+            [3, 5, 4, Infinity],
+            [5, Infinity, 4, 4],
+            [4, 4, Infinity, 5],
+            [Infinity, 4, 5, 3],
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),

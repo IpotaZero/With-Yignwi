@@ -24,7 +24,7 @@
         <div id="next">
             <button class="normal">次へ</button>
             <button class="chapter-end">章選択へ</button>
-            <button class="to-story">物語へ</button>
+            <button class="to-story">終焉へ</button>
         </div>
     </div>
 </div>
@@ -297,6 +297,42 @@
     }
 
     input {
+        &[value="-9"] {
+            color: hsl(from var(--nine) calc(h + 180) s l);
+        }
+
+        &[value="-8"] {
+            color: hsl(from var(--eight) calc(h + 180) s l);
+        }
+
+        &[value="-7"] {
+            color: hsl(from var(--seven) calc(h + 180) s l);
+        }
+
+        &[value="-6"] {
+            color: hsl(from var(--six) calc(h + 180) s l);
+        }
+
+        &[value="-5"] {
+            color: hsl(from var(--five) calc(h + 180) s l);
+        }
+
+        &[value="-4"] {
+            color: hsl(from var(--four) calc(h + 180) s l);
+        }
+
+        &[value="-3"] {
+            color: hsl(from var(--three) calc(h + 180) s l);
+        }
+
+        &[value="-2"] {
+            color: hsl(from var(--two) calc(h + 180) s l);
+        }
+
+        &[value="-1"] {
+            color: hsl(from var(--one) calc(h + 180) s l);
+        }
+
         &[value="0"] {
             color: var(--zero);
         }
