@@ -129,7 +129,7 @@ export class SceneTitle extends Scene {
 
         volumeSE.oninput = () => {
             SE.setVolume(+volumeSE.value)
-            // SE.ok.play()
+            SE.cursor.play()
             LocalStorage.setSEVolume(+volumeSE.value)
         }
 

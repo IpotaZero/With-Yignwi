@@ -193,7 +193,7 @@ export class SceneGame extends Scene {
     async #clearSE() {
         await BGM.fade(LocalStorage.getBGMVolume() / 2, 100)
         SE.clear.play()
-        await Awaits.sleep(1000)
+        await Awaits.sleep(1500)
         await BGM.fade(LocalStorage.getBGMVolume(), 1000)
     }
 
