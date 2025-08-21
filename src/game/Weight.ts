@@ -93,7 +93,7 @@ export function createXWeightMatrix(rows: number, cols: number, periods?: number
 
     const wholePeriod = periods?.reduce((a, b) => lcm(a, b), 1) ?? 1
 
-    console.log(wholePeriod)
+    // console.log(wholePeriod)
 
     const weight = (targetR: number, targetC: number) => {
         return periods ? wholePeriod / periods[targetR * cols + targetC] : 1

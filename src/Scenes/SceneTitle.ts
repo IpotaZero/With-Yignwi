@@ -5,7 +5,6 @@ import { SE } from "../SE.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { Scene } from "./Scene.js"
-import { SceneNovel } from "./SceneNovel.js"
 import { Scenes } from "./Scenes.js"
 
 export class SceneTitle extends Scene {
@@ -71,9 +70,9 @@ export class SceneTitle extends Scene {
         const buttons = container.querySelectorAll("button")
 
         buttons.forEach((button) => {
-            button.onmouseover = () => {
+            button.addEventListener("mouseover", () => {
                 SE.cursor.play()
-            }
+            })
         })
 
         const stageResults = LocalStorage.getData()
@@ -154,15 +153,19 @@ export class SceneTitle extends Scene {
 
         b.classList.toggle("hidden", !LocalStorage.getData().every((d) => d.cleared))
 
-        b.onclick = () => {
+        b.onclick = async () => {
+            const { SceneNovel } = await import("./SceneNovel.js")
             Scenes.goto(() => new SceneNovel(6))
         }
 
         const c = Dom.container.querySelector<HTMLButtonElement>("#omake")!
 
-        c.classList.toggle("hidden", !LocalStorage.getData().every((d) => d.leastCleared))
+        const 全ステージ最小手数クリア = LocalStorage.getData().every((d) => d.leastCleared)
 
-        c.onclick = () => {
+        c.classList.toggle("hidden", !全ステージ最小手数クリア)
+
+        c.onclick = async () => {
+            const { SceneNovel } = await import("./SceneNovel.js")
             Scenes.goto(() => new SceneNovel(7))
         }
     }

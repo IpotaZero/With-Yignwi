@@ -51,3 +51,5 @@ type Data = {
     cleared: boolean
     leastCleared: boolean
 }
+
+;(window as any).LocalStorage = LocalStorage

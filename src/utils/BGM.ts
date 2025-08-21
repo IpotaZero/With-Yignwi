@@ -64,19 +64,19 @@ export class BGM {
         this.#gain.gain.value = this.#volume
     }
 
-    static async fadeOut(duration: number) {
-        if (!this.#audio || !this.#source || !this.#gain) return
-
-        const currentTime = this.#context.currentTime
-        const endTime = currentTime + duration / 1000
-
-        this.#gain.gain.cancelScheduledValues(currentTime)
-        this.#gain.gain.setValueAtTime(this.#gain.gain.value, currentTime)
-        this.#gain.gain.linearRampToValueAtTime(0, endTime)
-
-        await new Promise((resolve) => setTimeout(resolve, duration))
-
+    static async fadeOut(durationMS: number) {
+        await this.fade(0.001, durationMS)
         this.pause()
         this.setVolume(this.#volume)
+    }
+
+    static fade(volume: number, durationMS: number) {
+        this.#gain.gain.cancelScheduledValues(this.#context.currentTime)
+        this.#gain.gain.setValueAtTime(this.#volume, this.#context.currentTime)
+        this.#gain.gain.linearRampToValueAtTime(volume, this.#context.currentTime + durationMS / 1000)
+
+        return new Promise((resolve) => {
+            setTimeout(resolve, durationMS)
+        })
     }
 }

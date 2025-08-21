@@ -16,6 +16,7 @@ class Sound {
 }
 
 export class SE {
+    static clear = new Sound("assets/sounds/clear.mp3")
     static cursor = new Sound("assets/sounds/カーソル移動4.mp3")
     static ok = new Sound("assets/sounds/タイプライターで文字を打つ1.mp3")
 

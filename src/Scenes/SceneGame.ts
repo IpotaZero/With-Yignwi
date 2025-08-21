@@ -6,7 +6,6 @@ import { Paint } from "../game/Paint.js"
 import { BGM } from "../utils/BGM.js"
 import { Scene } from "./Scene.js"
 import { Scenes } from "./Scenes.js"
-import { SceneNovel } from "./SceneNovel.js"
 import { Awaits } from "../utils/Awaits.js"
 import { SE } from "../SE.js"
 
@@ -124,6 +123,10 @@ export class SceneGame extends Scene {
         this.#cells.onclick = () => this.#onCellClick()
 
         this.#dom.back.onclick = async () => {
+            if (this.#cells.getBoardVector().every((c) => c === 0)) {
+                setData()
+            }
+
             const { SceneTitle } = await import("./SceneTitle.js")
             await Scenes.goto(() => new SceneTitle("#title #stage-select #chapter" + Math.floor(this.#stageId / 5)))
         }
@@ -153,6 +156,7 @@ export class SceneGame extends Scene {
 
         this.#dom.toStory.onclick = async () => {
             setData()
+            const { SceneNovel } = await import("./SceneNovel.js")
             await Scenes.goto(() => new SceneNovel(6, "game"))
         }
     }
@@ -162,7 +166,7 @@ export class SceneGame extends Scene {
         this.#setCount()
 
         if (this.#cells.getBoardVector().every((c) => c === 0)) {
-            SE.ok.play()
+            this.#clearSE()
 
             this.#cells.cells.classList.add("proof")
 
@@ -178,6 +182,13 @@ export class SceneGame extends Scene {
 
             this.#dom.next.classList.add("visible")
         }
+    }
+
+    async #clearSE() {
+        await BGM.fade(LocalStorage.getBGMVolume() / 4, 100)
+        SE.clear.play()
+        await Awaits.sleep(600)
+        await BGM.fade(LocalStorage.getBGMVolume(), 500)
     }
 
     #setCount() {

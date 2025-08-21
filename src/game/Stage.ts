@@ -174,19 +174,6 @@ export const stages: Stage[] = [
         rows: 4,
         cols: 4,
         periods: [
-            [3, 3, 3, 2],
-            [3, 3, 3, 2],
-            [3, 3, 3, 2],
-            [2, 2, 2, 2],
-        ].flat(),
-        clicks: [4, 6, 9, 2, 13, 6, 8],
-        weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 10,
-    },
-    {
-        rows: 4,
-        cols: 4,
-        periods: [
             [1, 2, 2, 1],
             [2, 3, 3, 2],
             [2, 3, 3, 2],
@@ -200,14 +187,14 @@ export const stages: Stage[] = [
         rows: 4,
         cols: 4,
         periods: [
-            [2, 2, 2, 6],
-            [2, 2, 2, 6],
-            [3, 3, 3, 6],
-            [3, 3, 3, 6],
+            [3, 3, 3, 2],
+            [3, 3, 3, 2],
+            [3, 3, 3, 2],
+            [2, 2, 2, 2],
         ].flat(),
-        clicks: [13, 3, 11, 6, 0, 3, 9],
+        clicks: [4, 6, 9, 2, 13, 6, 8],
         weight: () => createSquareWeightMatrix(4, 4),
-        minStep: 16,
+        minStep: 10,
     },
     {
         rows: 4,
@@ -221,6 +208,19 @@ export const stages: Stage[] = [
         clicks: [3, 1, 4, 15, 9, 2, 6, 5],
         weight: () => createSquareWeightMatrix(4, 4),
         minStep: 13,
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [2, 2, 2, 6],
+            [2, 2, 2, 6],
+            [3, 3, 3, 6],
+            [3, 3, 3, 6],
+        ].flat(),
+        clicks: [13, 3, 11, 6, 0, 3, 9],
+        weight: () => createSquareWeightMatrix(4, 4),
+        minStep: 16,
     },
 
     {
@@ -247,7 +247,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 3, 4, 7, 9, 12, 3],
         weight: () => createCrossWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 11,
     },
     {
         rows: 4,
@@ -260,7 +260,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 1, 3, 5, 7, 9, 5, 3, 11],
         weight: () => createCrossWeightMatrix(4, 4, [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
-        minStep: Infinity,
+        minStep: 3,
     },
     {
         rows: 4,
@@ -273,7 +273,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 3, 4, 7, 9, 12, 3],
         weight: () => createCrossWeightMatrix(4, 4, [1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2]),
-        minStep: Infinity,
+        minStep: 5,
     },
     {
         rows: 4,
@@ -303,46 +303,46 @@ export const stages: Stage[] = [
         periods: [[3, 2, 2, 3]].flat(),
         clicks: [0, 2],
         weight: () => createChessSquareWeightMatrix(1, 4),
-        minStep: Infinity,
-    },
-    {
-        rows: 4,
-        cols: 4,
-        periods: [
-            [2, 2, 2, 2],
-            [2, Infinity, 2, 2],
-            [2, 2, Infinity, 2],
-            [2, 2, 2, 2],
-        ].flat(),
-        clicks: [0, 2, 3, 5, 7, 11, 13],
-        weight: () => createChessSquareWeightMatrix(4, 4),
-        minStep: Infinity,
-    },
-    {
-        rows: 4,
-        cols: 4,
-        periods: [
-            [3, 2, 2, 3],
-            [2, Infinity, 2, 2],
-            [2, 2, Infinity, 2],
-            [3, 2, 2, 3],
-        ].flat(),
-        clicks: [0, 2, 3, 5, 7, 11, 13],
-        weight: () => createChessSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 3,
     },
     {
         rows: 4,
         cols: 4,
         periods: [
             [3, 2, 4, 3],
-            [2, Infinity, 4, 4],
-            [4, 4, Infinity, 2],
+            [2, Infinity, 1, 4],
+            [4, 1, Infinity, 2],
             [3, 4, 2, 3],
+        ].flat(),
+        clicks: [0, 2, 3, 5, 7, 11, 13, 1, 3, 7],
+        weight: () => createChessSquareWeightMatrix(4, 4),
+        minStep: 7,
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [2, 2, 2, 2],
+            [2, Infinity, 2, 2],
+            [2, 2, Infinity, 2],
+            [2, 2, 2, 2],
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4),
-        minStep: Infinity,
+        minStep: 13,
+    },
+    {
+        rows: 4,
+        cols: 4,
+        periods: [
+            [3, 2, 2, 3],
+            [2, Infinity, 2, 2],
+            [2, 2, Infinity, 2],
+            [3, 2, 2, 3],
+        ].flat(),
+        clicks: [0, 2, 3, 5, 7, 11, 13],
+        weight: () => createChessSquareWeightMatrix(4, 4),
+        minStep: 13,
     },
 
     {
@@ -356,7 +356,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
-        minStep: Infinity,
+        minStep: 5,
     },
     {
         rows: 4,
@@ -369,7 +369,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
-        minStep: Infinity,
+        minStep: 7,
     },
     {
         rows: 4,
@@ -382,7 +382,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
-        minStep: Infinity,
+        minStep: 11,
     },
     {
         rows: 4,
@@ -395,7 +395,7 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
-        minStep: Infinity,
+        minStep: 12,
     },
     {
         rows: 4,
@@ -408,6 +408,6 @@ export const stages: Stage[] = [
         ].flat(),
         clicks: [0, 2, 3, 5, 7, 11, 13],
         weight: () => createChessSquareWeightMatrix(4, 4, [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1]),
-        minStep: Infinity,
+        minStep: 15,
     },
 ]
