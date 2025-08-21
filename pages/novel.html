@@ -181,6 +181,8 @@
 <div class="page chapter" id="chapter7">
     <div class="novel">
         <p>"Yignwiの独り言"</p>
+
+        <p>解いて仕舞ったのは、外宇宙と繋がった綻び。</p>
         <p>
             純粋な <ruby>容<rt>かたち</rt> </ruby>の現出。
         </p>
@@ -201,10 +203,21 @@
         <br />
         <br />
         <br />
+
+        <img src="assets/images/cosmos.png" alt="宇宙" />
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <p>「風呂無し、屋根無し、地獄行き。」完全クリアおめでとう！</p>
         <p>この画面をスクショして友達に自慢しよう！</p>
+        <br />
         <br />
         <br />
     </div>
@@ -235,19 +248,27 @@
         }
     }
 
-    #chapter7 .novel {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 28dvh 12dvh;
+    #chapter7 {
+        & .novel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20dvh 12dvh;
+            padding-top: 16dvh;
 
-        overflow-y: auto;
+            overflow-y: auto;
 
-        p {
-            text-align: center;
-            font-size: 4dvh;
-            margin: 4dvh 0;
+            p {
+                text-align: center;
+                font-size: 4dvh;
+                margin: 4dvh 0;
+            }
+        }
+
+        & img {
+            z-index: 1000000;
+            width: 24dvw;
         }
     }
 

@@ -45,14 +45,10 @@ export class SceneGame extends Scene {
     }
 
     async #playBgm() {
-        await Awaits.sleep(1000)
-
         // console.log({ ...BGM })
 
-        if (BGM.path !== "assets/sounds/野晒しの地獄.mp3") {
-            await BGM.fadeOut(1000)
-            await BGM.fetch("assets/sounds/野晒しの地獄.mp3")
-            await BGM.play()
+        if (BGM.getPath() !== "assets/sounds/野晒しの地獄.mp3") {
+            BGM.ffp("assets/sounds/野晒しの地獄.mp3")
         }
     }
 

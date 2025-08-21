@@ -2,6 +2,7 @@ import { Dom } from "../Dom.js"
 import { LocalStorage } from "../LocalStorage.js"
 import { fall, setupParticle } from "../Particles.js"
 import { SE } from "../SE.js"
+import { Awaits } from "../utils/Awaits.js"
 import { BGM } from "../utils/BGM.js"
 import { page } from "../utils/Page.js"
 import { Scene } from "./Scene.js"
@@ -32,10 +33,7 @@ export class SceneTitle extends Scene {
 
     async #playBgm() {
         BGM.setVolume(LocalStorage.getBGMVolume())
-
-        await BGM.fadeOut(1000)
-        await BGM.fetch("assets/sounds/nontrapezodihedron.mp3")
-        await BGM.play()
+        BGM.ffp("assets/sounds/nontrapezodihedron.mp3", { loopStartS: 9.412, loopEndS: 65.882 })
     }
 
     #setupButtons() {

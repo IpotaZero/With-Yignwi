@@ -58,24 +58,16 @@ export class SceneNovel extends Scene {
         })
     }
 
-    async #normalBgm() {
-        await BGM.fadeOut(1000)
-        await BGM.fetch("assets/sounds/一切れの諧謔.mp3")
-        await BGM.play()
+    #normalBgm() {
+        BGM.ffp("assets/sounds/一切れの諧謔.mp3", { loopStartS: 1.82, loopEndS: 130.625 })
     }
 
-    async #lastBgm() {
-        await BGM.fadeOut(1000)
-        await Awaits.sleep(1000)
-        await BGM.fetch("assets/sounds/ちっぽけな煌めき.mp3")
-        await BGM.play()
+    #lastBgm() {
+        BGM.ffp("assets/sounds/ちっぽけな煌めき.mp3", { loopStartS: 0, loopEndS: 70.588, when: 1 })
     }
 
-    async #omakeBgm() {
-        await BGM.fadeOut(1000)
-        await Awaits.sleep(1000)
-        await BGM.fetch("assets/sounds/頽れた星.mp3")
-        await BGM.play()
+    #omakeBgm() {
+        BGM.ffp("assets/sounds/頽れた星.mp3", { loopStartS: 0, loopEndS: 77.419, when: 1 })
     }
 }
 
