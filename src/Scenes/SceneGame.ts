@@ -136,10 +136,16 @@ export class SceneGame extends Scene {
         }
 
         const setData = () => {
+            const notAllCleared = LocalStorage.getData().some((d) => !d.leastCleared)
+
             LocalStorage.setData(this.#stageId, {
                 cleared: true,
                 leastCleared: this.#countDenominator === this.#count,
             })
+
+            if (notAllCleared && LocalStorage.getData().every((d) => d.leastCleared)) {
+                alert("何処かからささめきが聞こえる......")
+            }
         }
 
         this.#dom.next.onclick = async () => {

@@ -1,9 +1,9 @@
 export class LocalStorage {
     static allClear() {
-        for (let i = 0; i < 30; i++) {
+        for (let i = 1; i < 30; i++) {
             this.setData(i, {
                 cleared: true,
-                leastCleared: false,
+                leastCleared: true,
             })
         }
     }
@@ -51,5 +51,4 @@ type Data = {
     cleared: boolean
     leastCleared: boolean
 }
-
 ;(window as any).LocalStorage = LocalStorage
