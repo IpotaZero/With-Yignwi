@@ -1,5 +1,5 @@
 var CACHE_NAME = "pwa-sample-caches"
-var urlsToCache = ["/"]
+var urlsToCache = ["With-Yignwi/"]
 
 self.addEventListener("install", function (event) {
     event.waitUntil(
