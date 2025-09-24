@@ -1,15 +1,17 @@
 {
     "short_name": "with-yignwi",
     "name": "風呂無し、屋根無し、地獄行き",
-    "display": "standalone",
+    "display": "fullscreen",
     "start_url": "index.html",
     "scope": "/",
-    "orientation": "landscape-primary",
+    "orientation": "landscape",
     "icons": [
         {
             "src": "assets/images/icon.png",
             "sizes": "512x512",
             "type": "image/png"
         }
-    ]
+    ],
+    "theme_color": "#f5f5f5",
+    "background_color": "#111111"
 }
