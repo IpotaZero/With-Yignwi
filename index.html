@@ -24,5 +24,13 @@
         <div id="container"></div>
         <div id="error">横向きにしたまえ。</div>
         <div id="texture"></div>
+
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("sw.js")
+                })
+            }
+        </script>
     </body>
 </html>
