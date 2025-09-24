@@ -3,9 +3,11 @@
     "name": "風呂無し、屋根無し、地獄行き",
     "display": "standalone",
     "start_url": "index.html",
+    "scope": "/",
+    "orientation": "landscape-primary",
     "icons": [
         {
-            "src": "assets/images/maple.png",
+            "src": "/assets/images/maple.png",
             "sizes": "32x32",
             "type": "image/png"
         }
