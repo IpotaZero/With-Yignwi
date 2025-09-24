@@ -7,8 +7,8 @@
     "orientation": "landscape-primary",
     "icons": [
         {
-            "src": "/assets/images/maple.png",
-            "sizes": "32x32",
+            "src": "/assets/images/icon.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ]
