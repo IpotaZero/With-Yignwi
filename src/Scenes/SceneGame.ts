@@ -80,7 +80,7 @@ export class SceneGame extends Scene {
 
         this.#dom.stageId.textContent = `${chapter} ${c[this.#stageId % 5]}幕`
 
-        const data = LocalStorage.getData()[this.#stageId]
+        const data = LocalStorage.getStageData()[this.#stageId]
         if (data.leastCleared) {
             this.#dom.stageId.textContent += "★"
         } else if (data.cleared) {
@@ -132,14 +132,14 @@ export class SceneGame extends Scene {
         }
 
         const setData = () => {
-            const notAllCleared = LocalStorage.getData().some((d) => !d.leastCleared)
+            const notAllCleared = LocalStorage.getStageData().some((d) => !d.leastCleared)
 
-            LocalStorage.setData(this.#stageId, {
+            LocalStorage.setStageData(this.#stageId, {
                 cleared: true,
                 leastCleared: this.#countDenominator === this.#count,
             })
 
-            if (notAllCleared && LocalStorage.getData().every((d) => d.leastCleared)) {
+            if (notAllCleared && LocalStorage.getStageData().every((d) => d.leastCleared)) {
                 alert("何処かからささめきが聞こえる......")
             }
         }

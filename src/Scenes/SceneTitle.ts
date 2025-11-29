@@ -73,7 +73,7 @@ export class SceneTitle extends Scene {
             })
         })
 
-        const stageResults = LocalStorage.getData()
+        const stageResults = LocalStorage.getStageData()
 
         stageResults.forEach((data, i) => {
             if (data.leastCleared) {
@@ -140,7 +140,7 @@ export class SceneTitle extends Scene {
             const confirmed = window.confirm("ほんとに?")
 
             if (confirmed) {
-                localStorage.clear()
+                LocalStorage.clear()
                 Scenes.goto(() => new SceneTitle("#title"))
             }
         }
@@ -149,7 +149,7 @@ export class SceneTitle extends Scene {
     #setupLastStoryButton() {
         const b = Dom.container.querySelector<HTMLButtonElement>("#last-story")!
 
-        b.classList.toggle("hidden", !LocalStorage.getData().every((d) => d.cleared))
+        b.classList.toggle("hidden", !LocalStorage.getStageData().every((d) => d.cleared))
 
         b.onclick = async () => {
             const { SceneNovel } = await import("./SceneNovel.js")
@@ -158,7 +158,7 @@ export class SceneTitle extends Scene {
 
         const c = Dom.container.querySelector<HTMLButtonElement>("#omake")!
 
-        const 全ステージ最小手数クリア = LocalStorage.getData().every((d) => d.leastCleared)
+        const 全ステージ最小手数クリア = LocalStorage.getStageData().every((d) => d.leastCleared)
 
         c.classList.toggle("hidden", !全ステージ最小手数クリア)
 
